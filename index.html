@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Diego Quinde · Investigación clínica e IA sistémica</title>
+<meta name="description" content="Diego Andrés Quinde Probst — psicólogo clínico. Investigación open source en la intersección de la terapia breve estratégica/sistémica y los modelos de lenguaje: corpus formales, simuladores de sistemas familiares y evaluación de IA en psicoterapia.">
+<meta property="og:title" content="Diego Quinde · Investigación clínica e IA sistémica">
+<meta property="og:description" content="Modelos interactivos y divulgación en la intersección de la terapia sistémica y la IA.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230f6e56'/%3E%3Ctext x='16' y='23' font-size='20' font-weight='700' text-anchor='middle' fill='white' font-family='-apple-system,sans-serif'%3Eq%3C/text%3E%3C/svg%3E">
+<style>
+:root{
+  --tinta:#1b2230; --gris:#5c616d; --suave:#8a8f9b; --linea:#e7e9ef;
+  --fondo:#fbfbfc; --panel:#ffffff;
+  --teal:#0f6e56; --teal-50:#e3f4ee; --coral:#d4533a; --azul:#3f5bd1; --verde:#2aa876;
+  --r:14px;
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,'Segoe UI',Roboto,Helvetica,sans-serif;color:var(--tinta);
+  background:var(--fondo);line-height:1.65;-webkit-font-smoothing:antialiased}
+.wrap{max-width:940px;margin:0 auto;padding:0 24px}
+nav{position:sticky;top:0;z-index:10;background:rgba(251,251,252,.86);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--linea)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:58px}
+nav .brand{font-weight:600;letter-spacing:-.01em}
+nav .brand b{color:var(--teal)}
+nav a{color:var(--gris);text-decoration:none;font-size:14px;margin-left:22px}
+nav a:hover{color:var(--tinta)}
+nav .links{display:flex;align-items:center}
+@media(max-width:600px){nav .links a:not(.cv){display:none}}
+
+.hero{padding:64px 0 28px}
+.hero .eyebrow{font-size:12.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--teal);
+  font-weight:600}
+.hero h1{font-size:clamp(30px,5.2vw,50px);line-height:1.08;letter-spacing:-.02em;font-weight:600;
+  margin-top:14px;max-width:18ch}
+.hero p{font-size:18.5px;color:var(--gris);margin-top:20px;max-width:60ch}
+.hero .who{margin-top:22px;font-size:14.5px;color:var(--suave)}
+.hero .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.btn{display:inline-flex;align-items:center;gap:8px;font-size:14.5px;font-weight:500;
+  text-decoration:none;border-radius:10px;padding:11px 18px;border:1px solid var(--linea);
+  background:#fff;color:var(--tinta);transition:.15s}
+.btn:hover{border-color:var(--suave)}
+.btn.primary{background:var(--teal);color:#fff;border-color:var(--teal)}
+
+section{padding:40px 0}
+.s-label{font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--suave);
+  margin-bottom:18px}
+h2.section{font-size:26px;letter-spacing:-.01em;margin-bottom:8px}
+.section-lead{color:var(--gris);max-width:64ch;margin-bottom:22px}
+
+/* modelo interactivo */
+.lab{border:1px solid var(--linea);border-radius:var(--r);background:var(--panel);overflow:hidden}
+.lab .head{padding:16px 20px;border-bottom:1px solid var(--linea);display:flex;
+  justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.lab .head .t{font-size:13px;letter-spacing:.07em;text-transform:uppercase;color:var(--suave)}
+.lab .controls{display:flex;gap:8px;flex-wrap:wrap}
+.toggle{display:inline-flex;border:1px solid var(--linea);border-radius:9px;overflow:hidden}
+.toggle button{font:inherit;font-size:13px;padding:7px 13px;border:0;background:#fff;
+  color:var(--gris);cursor:pointer;transition:background .15s,color .15s}
+.toggle button:hover:not(.on){background:#f4f5f8}
+.toggle button.on{background:var(--teal);color:#fff}
+.toggle[aria-disabled="true"]{opacity:.38;pointer-events:none}
+#curve{transition:stroke-dashoffset .1s}
+#dots circle{transition:cx .5s cubic-bezier(.4,0,.2,1),cy .5s cubic-bezier(.4,0,.2,1)}
+@media(prefers-reduced-motion:reduce){#dots circle{transition:none}}
+.lab .body{padding:18px 20px}
+.lab .read{padding:14px 20px;border-top:1px solid var(--linea);background:#fafbfc;font-size:14px;
+  color:var(--gris)}
+.lab .read b{color:var(--tinta)}
+svg .axis{stroke:#eef0f5}
+svg text{font-family:-apple-system,sans-serif}
+
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.card{border:1px solid var(--linea);border-radius:var(--r);background:var(--panel);padding:20px}
+.card .n{font-size:12px;font-weight:600;color:var(--teal);letter-spacing:.04em}
+.card h3{font-size:16px;margin:6px 0}
+.card p{font-size:14px;color:var(--gris)}
+
+.pub{border:1px solid var(--linea);border-left:4px solid var(--teal);border-radius:0 var(--r) var(--r) 0;
+  background:var(--panel);padding:22px 24px}
+.pub .tag{font-size:12px;color:var(--teal);font-weight:600;letter-spacing:.05em;text-transform:uppercase}
+.pub h3{font-size:19px;margin:8px 0;line-height:1.25}
+.pub p{font-size:14.5px;color:var(--gris)}
+.pub .meta{font-size:13px;color:var(--suave);margin-top:10px}
+.pub .meta a{color:var(--teal);text-decoration:none}
+
+.write{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.note{border:1px dashed var(--linea);border-radius:var(--r);padding:20px;background:var(--panel)}
+.note h3{font-size:16px}.note p{font-size:14px;color:var(--gris);margin-top:4px}
+.note .soon{font-size:11.5px;color:var(--suave);letter-spacing:.06em;text-transform:uppercase}
+
+footer{border-top:1px solid var(--linea);margin-top:36px;padding:28px 0 48px;font-size:13.5px;
+  color:var(--suave)}
+footer a{color:var(--teal);text-decoration:none}
+footer .row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.aviso{font-size:12px;margin-top:14px;max-width:70ch}
+@media(max-width:680px){.cards,.write{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <div class="brand">Diego Quinde<b>.</b></div>
+  <div class="links">
+    <a href="#investigacion">Investigación</a>
+    <a href="#modelo">Modelos</a>
+    <a href="#publicaciones">Publicaciones</a>
+    <a href="#divulgacion">Divulgación</a>
+    <a class="cv" href="#contacto">Contacto</a>
+  </div>
+</div></nav>
+
+<div class="wrap">
+
+  <section class="hero">
+    <div class="eyebrow">Psicología clínica · Terapia breve estratégica y sistémica · IA</div>
+    <h1>Hacer visible y medible la teoría de los sistemas.</h1>
+    <p>Investigo en la intersección de la terapia breve estratégica/sistémica y los modelos de
+      lenguaje: convierto el conocimiento clínico en <strong>corpus formales</strong>,
+      <strong>simuladores de sistemas familiares</strong> y <strong>evaluaciones de IA</strong>
+      para psicoterapia. Todo open source, en español, reproducible.</p>
+    <div class="who">Diego Andrés Quinde Probst · psicólogo clínico · Santo Domingo, Ecuador</div>
+    <div class="cta">
+      <a class="btn primary" href="#modelo">Probar un modelo interactivo</a>
+      <a class="btn" href="#publicaciones">Ver publicaciones</a>
+    </div>
+  </section>
+
+  <!-- ===== MODELO INTERACTIVO ===== -->
+  <section id="modelo">
+    <div class="s-label">Modelo interactivo</div>
+    <h2 class="section">El contrafactual de una intervención</h2>
+    <p class="section-lead">En la clínica real solo se vive una historia. Aquí puedes ver las dos:
+      la misma familia con y sin la maniobra del terapeuta — y qué pasa cuando el sistema la
+      ejecuta o la neutraliza. Mueve los controles.</p>
+
+    <div class="lab">
+      <div class="head">
+        <div class="t">Intensidad del síntoma · 5 sesiones</div>
+        <div class="controls">
+          <div class="toggle" id="tg-interv" role="group" aria-label="Intervención del terapeuta">
+            <button data-v="con" class="on" aria-pressed="true">Con intervención</button>
+            <button data-v="sin" aria-pressed="false">Sin intervención</button>
+          </div>
+          <div class="toggle" id="tg-resp" role="group" aria-label="Respuesta del sistema">
+            <button data-v="ejecuta" class="on" aria-pressed="true">El sistema ejecuta</button>
+            <button data-v="neutraliza" aria-pressed="false">La neutraliza</button>
+          </div>
+        </div>
+      </div>
+      <div class="body">
+        <svg id="chart" viewBox="0 0 840 340" role="img" aria-label="Trayectoria interactiva del síntoma" style="width:100%;height:auto">
+          <g class="axis"><line x1="60" y1="40" x2="800" y2="40"/><line x1="60" y1="130" x2="800" y2="130"/><line x1="60" y1="220" x2="800" y2="220"/><line x1="60" y1="280" x2="800" y2="280"/></g>
+          <g font-size="11" fill="#9aa3b2"><text x="50" y="44" text-anchor="end">10</text><text x="50" y="224" text-anchor="end">3</text><text x="50" y="284" text-anchor="end">0</text></g>
+          <line id="ivline" x1="245" y1="30" x2="245" y2="280" stroke="#48505e" stroke-dasharray="5 4"/>
+          <text id="ivlabel" x="245" y="24" text-anchor="middle" font-size="11" fill="#48505e">intervención</text>
+          <g font-size="11.5" fill="#737d8c"><text x="60" y="305" text-anchor="middle">S1</text><text x="245" y="305" text-anchor="middle">S2</text><text x="430" y="305" text-anchor="middle">S3</text><text x="615" y="305" text-anchor="middle">S4</text><text x="800" y="305" text-anchor="middle">S5</text></g>
+          <polyline id="curve" fill="none" stroke="#d4533a" stroke-width="2.8" stroke-linejoin="round" points=""/>
+          <g id="dots"></g>
+        </svg>
+      </div>
+      <div class="read" id="readout"></div>
+    </div>
+    <p class="section-lead" style="margin-top:14px;font-size:13.5px;color:var(--suave)">
+      Datos sintéticos, ilustrativos — del preprint <em>Simulating family systems with LLM
+      agents</em>. No representan a ninguna familia real.</p>
+  </section>
+
+  <!-- ===== INVESTIGACIÓN ===== -->
+  <section id="investigacion">
+    <div class="s-label">Líneas de investigación</div>
+    <h2 class="section">Qué construyo</h2>
+    <div class="cards">
+      <div class="card"><div class="n">01 · LENGUAJE</div><h3>Corpus formal</h3>
+        <p>Taxonomía citada y legible por máquina de las maniobras y patrones de la terapia breve
+          estratégica. El vocabulario clínico convertido en datos.</p></div>
+      <div class="card"><div class="n">02 · SIMULACIÓN</div><h3>Sistemas familiares</h3>
+        <p>Agentes LLM que simulan la dinámica de una familia y permiten ensayar intervenciones
+          antes de la sesión, en contrafactual.</p></div>
+      <div class="card"><div class="n">03 · EVALUACIÓN</div><h3>IA en psicoterapia</h3>
+        <p>Benchmarks de qué tan bien los modelos reconocen patrones sistémicos y proponen
+          maniobras — con validación clínica.</p></div>
+    </div>
+  </section>
+
+  <!-- ===== PUBLICACIONES ===== -->
+  <section id="publicaciones">
+    <div class="s-label">Publicaciones</div>
+    <h2 class="section">Trabajos</h2>
+    <div class="pub">
+      <div class="tag">Preprint · 2026</div>
+      <h3>Simulating family systems with LLM agents: a corpus-grounded engine for counterfactual
+        rehearsal of strategic therapy interventions</h3>
+      <p>Un corpus citado de 18 entradas de la terapia breve estratégica, un simulador de sistemas
+        familiares con agentes LLM, y el ensayo contrafactual de maniobras. 100% local, datos
+        sintéticos.</p>
+      <div class="meta">
+        Datos y código: <a href="https://doi.org/10.5281/zenodo.20748639">10.5281/zenodo.20748639</a>
+        · Preprint: <span style="color:var(--suave)">PsyArXiv (en moderación)</span>
+        · <a href="https://github.com/diegoqprobst/quinde-clinica-local">GitHub</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== DIVULGACIÓN ===== -->
+  <section id="divulgacion">
+    <div class="s-label">Divulgación</div>
+    <h2 class="section">Escribir para pensar en voz alta</h2>
+    <p class="section-lead">Notas sobre terapia sistémica, IA y el oficio de investigar desde la
+      clínica. (Próximamente.)</p>
+    <div class="write">
+      <div class="note"><div class="soon">Próximo</div>
+        <h3>Por qué simular una familia, no un paciente</h3>
+        <p>El cambio de unidad de análisis — del individuo al sistema — y qué lo hace difícil de
+          copiar.</p></div>
+      <div class="note"><div class="soon">Próximo</div>
+        <h3>El límite de mi lenguaje</h3>
+        <p>Formalizar el vocabulario de la terapia breve estratégica como un acto de investigación
+          en sí mismo.</p></div>
+    </div>
+  </section>
+
+  <footer id="contacto">
+    <div class="row">
+      <div>
+        <strong>Diego Andrés Quinde Probst</strong><br>
+        Psicólogo clínico · Independent researcher · Santo Domingo, Ecuador
+      </div>
+      <div>
+        <a href="mailto:diegoaquinde@gmail.com">diegoaquinde@gmail.com</a><br>
+        <a href="https://orcid.org/0009-0005-7107-8897">ORCID 0009-0005-7107-8897</a><br>
+        <a href="https://github.com/diegoqprobst">GitHub</a>
+      </div>
+    </div>
+    <div class="aviso">El material de investigación usa datos 100% sintéticos. Las herramientas son
+      apoyo para pensar y formarse en clave sistémica; no predicen casos reales ni sustituyen el
+      juicio clínico. No son dispositivos médicos.</div>
+  </footer>
+
+</div>
+
+<script>
+// Modelo interactivo: la trayectoria del síntoma según los dos controles.
+// y(valor 0-10) -> pixel.  y = 280 - valor*24   (0→280, 10→40)
+const X = [60, 245, 430, 615, 800];
+const Y = v => 280 - v * 24;
+// trayectorias (intensidad por sesión), del preprint:
+const DATA = {
+  sin:        [8, 8, 9, 9, 9],            // sin intervención: más de lo mismo
+  con_ejecuta:[8, 6, 5, 4, 5],            // ejecutada: desbloqueo (cambio 2)
+  con_neutra: [8, 8, 8, 8, 8],            // neutralizada: homeostasis
+};
+let interv = 'con', resp = 'ejecuta';
+
+// puntos persistentes: se crean una vez y luego solo se mueven (anima cx/cy).
+const dotsG = document.getElementById('dots');
+const dotEls = X.map((x,i)=>{
+  const c = document.createElementNS('http://www.w3.org/2000/svg','circle');
+  c.setAttribute('cx', x); c.setAttribute('cy', Y(8)); c.setAttribute('r', 4.5);
+  c.setAttribute('fill', '#d4533a'); dotsG.appendChild(c); return c;
+});
+
+function serie(){
+  if (interv === 'sin') return DATA.sin;
+  return resp === 'ejecuta' ? DATA.con_ejecuta : DATA.con_neutra;
+}
+function pintar(){
+  const s = serie();
+  document.getElementById('curve').setAttribute('points', s.map((v,i)=>`${X[i]},${Y(v)}`).join(' '));
+  dotEls.forEach((c,i)=>c.setAttribute('cy', Y(s[i])));
+  const showIv = interv === 'con';
+  document.getElementById('ivline').style.display = showIv ? '' : 'none';
+  document.getElementById('ivlabel').style.display = showIv ? '' : 'none';
+  // el control de respuesta solo aplica cuando hay intervención.
+  document.getElementById('tg-resp').setAttribute('aria-disabled', showIv ? 'false' : 'true');
+  let txt;
+  if (interv === 'sin')
+    txt = '<b>Sin intervención.</b> El síntoma deriva al alza: el sistema repite sus soluciones intentadas — "más de lo mismo" (cambio 1).';
+  else if (resp === 'ejecuta')
+    txt = '<b>Maniobra ejecutada.</b> El síntoma cae de forma discontinua tras la sesión 2: el desbloqueo del cambio de segundo orden.';
+  else
+    txt = '<b>Maniobra neutralizada.</b> El sistema absorbe la intervención y el síntoma se mantiene plano: la resistencia homeostática (ocurre ~60% de las veces).';
+  document.getElementById('readout').innerHTML = txt;
+}
+function wire(id, set){
+  document.querySelectorAll('#'+id+' button').forEach(b=>{
+    b.addEventListener('click', ()=>{
+      document.querySelectorAll('#'+id+' button').forEach(x=>{ x.classList.remove('on'); x.setAttribute('aria-pressed','false'); });
+      b.classList.add('on'); b.setAttribute('aria-pressed','true'); set(b.dataset.v); pintar();
+    });
+  });
+}
+wire('tg-interv', v=>{ interv = v; });
+wire('tg-resp', v=>{ resp = v; });
+pintar();
+</script>
+</body>
+</html>
