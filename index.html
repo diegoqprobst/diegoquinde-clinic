@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Diego Quinde · Investigación clínica e IA sistémica</title>
-<meta name="description" content="Diego Andrés Quinde Probst — psicólogo clínico. Investigación open source en la intersección de la terapia breve estratégica/sistémica y los modelos de lenguaje: corpus formales, simuladores de sistemas familiares y evaluación de IA en psicoterapia.">
-<meta property="og:title" content="Diego Quinde · Investigación clínica e IA sistémica">
-<meta property="og:description" content="Modelos interactivos y divulgación en la intersección de la terapia sistémica y la IA.">
+<meta name="description" content="Diego Andrés Quinde Probst — psicólogo clínico / clinical psychologist. Open-source research at the intersection of brief strategic & systemic therapy and language models: formal corpora, family-systems simulators, and AI evaluation in psychotherapy.">
+<meta property="og:title" content="Diego Quinde · Clinical research & systemic AI">
+<meta property="og:description" content="Interactive models and writing at the intersection of systemic therapy and AI.">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230f6e56'/%3E%3Ctext x='16' y='23' font-size='20' font-weight='700' text-anchor='middle' fill='white' font-family='-apple-system,sans-serif'%3Eq%3C/text%3E%3C/svg%3E">
 <style>
@@ -29,7 +29,14 @@ nav .brand b{color:var(--teal)}
 nav a{color:var(--gris);text-decoration:none;font-size:14px;margin-left:22px}
 nav a:hover{color:var(--tinta)}
 nav .links{display:flex;align-items:center}
-@media(max-width:600px){nav .links a:not(.cv){display:none}}
+@media(max-width:600px){nav .links a{display:none}}
+
+/* selector de idioma */
+.langsw{display:inline-flex;margin-left:22px;border:1px solid var(--linea);border-radius:8px;overflow:hidden}
+.langsw button{font:inherit;font-size:12px;font-weight:600;letter-spacing:.02em;padding:5px 9px;
+  border:0;background:#fff;color:var(--suave);cursor:pointer;transition:background .15s,color .15s}
+.langsw button.on{background:var(--teal);color:#fff}
+.langsw button:hover:not(.on){background:#f4f5f8}
 
 .hero{padding:64px 0 28px}
 .hero .eyebrow{font-size:12.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--teal);
@@ -105,54 +112,57 @@ footer .row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
 <nav><div class="wrap">
   <div class="brand">Diego Quinde<b>.</b></div>
   <div class="links">
-    <a href="#investigacion">Investigación</a>
-    <a href="#modelo">Modelos</a>
-    <a href="#publicaciones">Publicaciones</a>
-    <a href="#divulgacion">Divulgación</a>
-    <a class="cv" href="#contacto">Contacto</a>
+    <a href="#investigacion" data-en="Research">Investigación</a>
+    <a href="#modelo" data-en="Models">Modelos</a>
+    <a href="#publicaciones" data-en="Publications">Publicaciones</a>
+    <a href="#divulgacion" data-en="Writing">Divulgación</a>
+    <a href="#contacto" data-en="Contact">Contacto</a>
+    <div class="langsw" role="group" aria-label="Idioma / Language">
+      <button data-l="es">ES</button><button data-l="en">EN</button>
+    </div>
   </div>
 </div></nav>
 
 <div class="wrap">
 
   <section class="hero">
-    <div class="eyebrow">Psicología clínica · Terapia breve estratégica y sistémica · IA</div>
-    <h1>Hacer visible y medible la teoría de los sistemas.</h1>
-    <p>Investigo en la intersección de la terapia breve estratégica/sistémica y los modelos de
+    <div class="eyebrow" data-en="Clinical psychology · Brief strategic &amp; systemic therapy · AI">Psicología clínica · Terapia breve estratégica y sistémica · IA</div>
+    <h1 data-en="Making systems theory visible and measurable.">Hacer visible y medible la teoría de los sistemas.</h1>
+    <p data-en="I work at the intersection of brief strategic / systemic therapy and language models: I turn clinical knowledge into <strong>formal corpora</strong>, <strong>family-systems simulators</strong> and <strong>AI evaluations</strong> for psychotherapy. All open source, reproducible, built in Spanish.">Investigo en la intersección de la terapia breve estratégica/sistémica y los modelos de
       lenguaje: convierto el conocimiento clínico en <strong>corpus formales</strong>,
       <strong>simuladores de sistemas familiares</strong> y <strong>evaluaciones de IA</strong>
       para psicoterapia. Todo open source, en español, reproducible.</p>
-    <div class="who">Diego Andrés Quinde Probst · psicólogo clínico · Santo Domingo, Ecuador</div>
+    <div class="who" data-en="Diego Andrés Quinde Probst · clinical psychologist · Santo Domingo, Ecuador">Diego Andrés Quinde Probst · psicólogo clínico · Santo Domingo, Ecuador</div>
     <div class="cta">
-      <a class="btn primary" href="#modelo">Probar un modelo interactivo</a>
-      <a class="btn" href="#publicaciones">Ver publicaciones</a>
+      <a class="btn primary" href="#modelo" data-en="Try an interactive model">Probar un modelo interactivo</a>
+      <a class="btn" href="#publicaciones" data-en="See publications">Ver publicaciones</a>
     </div>
   </section>
 
   <!-- ===== MODELO INTERACTIVO ===== -->
   <section id="modelo">
-    <div class="s-label">Modelo interactivo</div>
-    <h2 class="section">El contrafactual de una intervención</h2>
-    <p class="section-lead">En la clínica real solo se vive una historia. Aquí puedes ver las dos:
+    <div class="s-label" data-en="Interactive model">Modelo interactivo</div>
+    <h2 class="section" data-en="The counterfactual of an intervention">El contrafactual de una intervención</h2>
+    <p class="section-lead" data-en="In real clinical work you only live one storyline. Here you can see both: the same family with and without the therapist's maneuver — and what happens when the system carries it out or neutralizes it. Move the controls.">En la clínica real solo se vive una historia. Aquí puedes ver las dos:
       la misma familia con y sin la maniobra del terapeuta — y qué pasa cuando el sistema la
       ejecuta o la neutraliza. Mueve los controles.</p>
 
     <div class="lab">
       <div class="head">
-        <div class="t">Intensidad del síntoma · 5 sesiones</div>
+        <div class="t" data-en="Symptom intensity · 5 sessions">Intensidad del síntoma · 5 sesiones</div>
         <div class="controls">
-          <div class="toggle" id="tg-interv" role="group" aria-label="Intervención del terapeuta">
-            <button data-v="con" class="on" aria-pressed="true">Con intervención</button>
-            <button data-v="sin" aria-pressed="false">Sin intervención</button>
+          <div class="toggle" id="tg-interv" role="group" aria-label="Intervención / Intervention">
+            <button data-v="con" class="on" aria-pressed="true" data-en="With intervention">Con intervención</button>
+            <button data-v="sin" aria-pressed="false" data-en="Without intervention">Sin intervención</button>
           </div>
-          <div class="toggle" id="tg-resp" role="group" aria-label="Respuesta del sistema">
-            <button data-v="ejecuta" class="on" aria-pressed="true">El sistema ejecuta</button>
-            <button data-v="neutraliza" aria-pressed="false">La neutraliza</button>
+          <div class="toggle" id="tg-resp" role="group" aria-label="Respuesta del sistema / System response">
+            <button data-v="ejecuta" class="on" aria-pressed="true" data-en="System carries it out">El sistema ejecuta</button>
+            <button data-v="neutraliza" aria-pressed="false" data-en="System neutralizes it">La neutraliza</button>
           </div>
         </div>
       </div>
       <div class="body">
-        <svg id="chart" viewBox="0 0 840 340" role="img" aria-label="Trayectoria interactiva del síntoma" style="width:100%;height:auto">
+        <svg id="chart" viewBox="0 0 840 340" role="img" aria-label="Trayectoria interactiva del síntoma / Interactive symptom trajectory" style="width:100%;height:auto">
           <g class="axis"><line x1="60" y1="40" x2="800" y2="40"/><line x1="60" y1="130" x2="800" y2="130"/><line x1="60" y1="220" x2="800" y2="220"/><line x1="60" y1="280" x2="800" y2="280"/></g>
           <g font-size="11" fill="#9aa3b2"><text x="50" y="44" text-anchor="end">10</text><text x="50" y="224" text-anchor="end">3</text><text x="50" y="284" text-anchor="end">0</text></g>
           <line id="ivline" x1="245" y1="30" x2="245" y2="280" stroke="#48505e" stroke-dasharray="5 4"/>
@@ -164,42 +174,42 @@ footer .row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
       </div>
       <div class="read" id="readout"></div>
     </div>
-    <p class="section-lead" style="margin-top:14px;font-size:13.5px;color:var(--suave)">
+    <p class="section-lead" style="margin-top:14px;font-size:13.5px;color:var(--suave)" data-en="Synthetic, illustrative data — from the preprint <em>Simulating family systems with LLM agents</em>. They do not represent any real family.">
       Datos sintéticos, ilustrativos — del preprint <em>Simulating family systems with LLM
       agents</em>. No representan a ninguna familia real.</p>
   </section>
 
   <!-- ===== INVESTIGACIÓN ===== -->
   <section id="investigacion">
-    <div class="s-label">Líneas de investigación</div>
-    <h2 class="section">Qué construyo</h2>
+    <div class="s-label" data-en="Research lines">Líneas de investigación</div>
+    <h2 class="section" data-en="What I build">Qué construyo</h2>
     <div class="cards">
-      <div class="card"><div class="n">01 · LENGUAJE</div><h3>Corpus formal</h3>
-        <p>Taxonomía citada y legible por máquina de las maniobras y patrones de la terapia breve
+      <div class="card"><div class="n" data-en="01 · LANGUAGE">01 · LENGUAJE</div><h3 data-en="Formal corpus">Corpus formal</h3>
+        <p data-en="A cited, machine-readable taxonomy of the maneuvers and patterns of brief strategic therapy. Clinical vocabulary turned into data.">Taxonomía citada y legible por máquina de las maniobras y patrones de la terapia breve
           estratégica. El vocabulario clínico convertido en datos.</p></div>
-      <div class="card"><div class="n">02 · SIMULACIÓN</div><h3>Sistemas familiares</h3>
-        <p>Agentes LLM que simulan la dinámica de una familia y permiten ensayar intervenciones
+      <div class="card"><div class="n" data-en="02 · SIMULATION">02 · SIMULACIÓN</div><h3 data-en="Family systems">Sistemas familiares</h3>
+        <p data-en="LLM agents that simulate a family's dynamics and let you rehearse interventions before the session, in counterfactual.">Agentes LLM que simulan la dinámica de una familia y permiten ensayar intervenciones
           antes de la sesión, en contrafactual.</p></div>
-      <div class="card"><div class="n">03 · EVALUACIÓN</div><h3>IA en psicoterapia</h3>
-        <p>Benchmarks de qué tan bien los modelos reconocen patrones sistémicos y proponen
+      <div class="card"><div class="n" data-en="03 · EVALUATION">03 · EVALUACIÓN</div><h3 data-en="AI in psychotherapy">IA en psicoterapia</h3>
+        <p data-en="Benchmarks of how well models recognize systemic patterns and propose maneuvers — with clinical validation.">Benchmarks de qué tan bien los modelos reconocen patrones sistémicos y proponen
           maniobras — con validación clínica.</p></div>
     </div>
   </section>
 
   <!-- ===== PUBLICACIONES ===== -->
   <section id="publicaciones">
-    <div class="s-label">Publicaciones</div>
-    <h2 class="section">Trabajos</h2>
+    <div class="s-label" data-en="Publications">Publicaciones</div>
+    <h2 class="section" data-en="Work">Trabajos</h2>
     <div class="pub">
       <div class="tag">Preprint · 2026</div>
       <h3>Simulating family systems with LLM agents: a corpus-grounded engine for counterfactual
         rehearsal of strategic therapy interventions</h3>
-      <p>Un corpus citado de 18 entradas de la terapia breve estratégica, un simulador de sistemas
+      <p data-en="A cited corpus of 18 brief-strategic-therapy entries, a family-systems simulator built on LLM agents, and counterfactual rehearsal of maneuvers. 100% local, synthetic data.">Un corpus citado de 18 entradas de la terapia breve estratégica, un simulador de sistemas
         familiares con agentes LLM, y el ensayo contrafactual de maniobras. 100% local, datos
         sintéticos.</p>
       <div class="meta">
-        Datos y código: <a href="https://doi.org/10.5281/zenodo.20748639">10.5281/zenodo.20748639</a>
-        · Preprint: <span style="color:var(--suave)">PsyArXiv (en moderación)</span>
+        <span data-en="Data &amp; code:">Datos y código:</span> <a href="https://doi.org/10.5281/zenodo.20748639">10.5281/zenodo.20748639</a>
+        · Preprint: <span style="color:var(--suave)" data-en="PsyArXiv (under moderation)">PsyArXiv (en moderación)</span>
         · <a href="https://github.com/diegoqprobst/quinde-clinica-local">GitHub</a>
       </div>
     </div>
@@ -207,18 +217,18 @@ footer .row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
 
   <!-- ===== DIVULGACIÓN ===== -->
   <section id="divulgacion">
-    <div class="s-label">Divulgación</div>
-    <h2 class="section">Escribir para pensar en voz alta</h2>
-    <p class="section-lead">Notas sobre terapia sistémica, IA y el oficio de investigar desde la
+    <div class="s-label" data-en="Writing">Divulgación</div>
+    <h2 class="section" data-en="Writing to think out loud">Escribir para pensar en voz alta</h2>
+    <p class="section-lead" data-en="Notes on systemic therapy, AI, and the craft of doing research from the clinic. (Coming soon.)">Notas sobre terapia sistémica, IA y el oficio de investigar desde la
       clínica. (Próximamente.)</p>
     <div class="write">
-      <div class="note"><div class="soon">Próximo</div>
-        <h3>Por qué simular una familia, no un paciente</h3>
-        <p>El cambio de unidad de análisis — del individuo al sistema — y qué lo hace difícil de
+      <div class="note"><div class="soon" data-en="Soon">Próximo</div>
+        <h3 data-en="Why simulate a family, not a patient">Por qué simular una familia, no un paciente</h3>
+        <p data-en="The shift in the unit of analysis — from the individual to the system — and what makes it hard to copy.">El cambio de unidad de análisis — del individuo al sistema — y qué lo hace difícil de
           copiar.</p></div>
-      <div class="note"><div class="soon">Próximo</div>
-        <h3>El límite de mi lenguaje</h3>
-        <p>Formalizar el vocabulario de la terapia breve estratégica como un acto de investigación
+      <div class="note"><div class="soon" data-en="Soon">Próximo</div>
+        <h3 data-en="The limits of my language">El límite de mi lenguaje</h3>
+        <p data-en="Formalizing the vocabulary of brief strategic therapy as an act of research in itself.">Formalizar el vocabulario de la terapia breve estratégica como un acto de investigación
           en sí mismo.</p></div>
     </div>
   </section>
@@ -227,7 +237,7 @@ footer .row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
     <div class="row">
       <div>
         <strong>Diego Andrés Quinde Probst</strong><br>
-        Psicólogo clínico · Independent researcher · Santo Domingo, Ecuador
+        <span data-en="Clinical psychologist · Independent researcher · Santo Domingo, Ecuador">Psicólogo clínico · Independent researcher · Santo Domingo, Ecuador</span>
       </div>
       <div>
         <a href="mailto:diegoaquinde@gmail.com">diegoaquinde@gmail.com</a><br>
@@ -235,7 +245,7 @@ footer .row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
         <a href="https://github.com/diegoqprobst">GitHub</a>
       </div>
     </div>
-    <div class="aviso">El material de investigación usa datos 100% sintéticos. Las herramientas son
+    <div class="aviso" data-en="All research material uses 100% synthetic data. The tools support systemic thinking and training; they do not predict real cases or replace clinical judgment. They are not medical devices.">El material de investigación usa datos 100% sintéticos. Las herramientas son
       apoyo para pensar y formarse en clave sistémica; no predicen casos reales ni sustituyen el
       juicio clínico. No son dispositivos médicos.</div>
   </footer>
@@ -253,7 +263,24 @@ const DATA = {
   con_ejecuta:[8, 6, 5, 4, 5],            // ejecutada: desbloqueo (cambio 2)
   con_neutra: [8, 8, 8, 8, 8],            // neutralizada: homeostasis
 };
-let interv = 'con', resp = 'ejecuta';
+// textos del modelo, bilingües (la lectura dinámica + la etiqueta del eje).
+const READ = {
+  es: {
+    iv: 'intervención',
+    sin: '<b>Sin intervención.</b> El síntoma deriva al alza: el sistema repite sus soluciones intentadas — "más de lo mismo" (cambio 1).',
+    ejecuta: '<b>Maniobra ejecutada.</b> El síntoma cae de forma discontinua tras la sesión 2: el desbloqueo del cambio de segundo orden.',
+    neutra: '<b>Maniobra neutralizada.</b> El sistema absorbe la intervención y el síntoma se mantiene plano: la resistencia homeostática (ocurre ~60% de las veces).'
+  },
+  en: {
+    iv: 'intervention',
+    sin: '<b>Without intervention.</b> The symptom drifts upward: the system repeats its attempted solutions — "more of the same" (first-order change).',
+    ejecuta: '<b>Maneuver carried out.</b> The symptom drops discontinuously after session 2: the unlocking of second-order change.',
+    neutra: '<b>Maneuver neutralized.</b> The system absorbs the intervention and the symptom stays flat: homeostatic resistance (happens ~60% of the time).'
+  }
+};
+const TITLE = { es: 'Diego Quinde · Investigación clínica e IA sistémica', en: 'Diego Quinde · Clinical research & systemic AI' };
+
+let interv = 'con', resp = 'ejecuta', LANG = 'es';
 
 // puntos persistentes: se crean una vez y luego solo se mueven (anima cx/cy).
 const dotsG = document.getElementById('dots');
@@ -268,22 +295,17 @@ function serie(){
   return resp === 'ejecuta' ? DATA.con_ejecuta : DATA.con_neutra;
 }
 function pintar(){
-  const s = serie();
+  const s = serie(), R = READ[LANG];
   document.getElementById('curve').setAttribute('points', s.map((v,i)=>`${X[i]},${Y(v)}`).join(' '));
   dotEls.forEach((c,i)=>c.setAttribute('cy', Y(s[i])));
   const showIv = interv === 'con';
   document.getElementById('ivline').style.display = showIv ? '' : 'none';
   document.getElementById('ivlabel').style.display = showIv ? '' : 'none';
+  document.getElementById('ivlabel').textContent = R.iv;
   // el control de respuesta solo aplica cuando hay intervención.
   document.getElementById('tg-resp').setAttribute('aria-disabled', showIv ? 'false' : 'true');
-  let txt;
-  if (interv === 'sin')
-    txt = '<b>Sin intervención.</b> El síntoma deriva al alza: el sistema repite sus soluciones intentadas — "más de lo mismo" (cambio 1).';
-  else if (resp === 'ejecuta')
-    txt = '<b>Maniobra ejecutada.</b> El síntoma cae de forma discontinua tras la sesión 2: el desbloqueo del cambio de segundo orden.';
-  else
-    txt = '<b>Maniobra neutralizada.</b> El sistema absorbe la intervención y el síntoma se mantiene plano: la resistencia homeostática (ocurre ~60% de las veces).';
-  document.getElementById('readout').innerHTML = txt;
+  document.getElementById('readout').innerHTML =
+    interv === 'sin' ? R.sin : (resp === 'ejecuta' ? R.ejecuta : R.neutra);
 }
 function wire(id, set){
   document.querySelectorAll('#'+id+' button').forEach(b=>{
@@ -293,9 +315,30 @@ function wire(id, set){
     });
   });
 }
+
+// i18n: el español es el contenido inline (fallback sin JS); data-en trae el inglés.
+function applyLang(l){
+  LANG = l;
+  document.documentElement.lang = l;
+  document.title = TITLE[l];
+  document.querySelectorAll('[data-en]').forEach(el=>{
+    if (el.dataset.es === undefined) el.dataset.es = el.innerHTML.trim();
+    el.innerHTML = l === 'en' ? el.dataset.en : el.dataset.es;
+  });
+  document.querySelectorAll('.langsw button').forEach(b=>b.classList.toggle('on', b.dataset.l === l));
+  try { localStorage.setItem('lang', l); } catch(e) {}
+  pintar();
+}
+document.querySelectorAll('.langsw button').forEach(b=>
+  b.addEventListener('click', ()=>applyLang(b.dataset.l)));
+
 wire('tg-interv', v=>{ interv = v; });
 wire('tg-resp', v=>{ resp = v; });
-pintar();
+
+let saved = null;
+try { saved = localStorage.getItem('lang'); } catch(e) {}
+const inicial = saved || ((navigator.language || 'es').toLowerCase().startsWith('es') ? 'es' : 'en');
+applyLang(inicial);
 </script>
 </body>
 </html>
