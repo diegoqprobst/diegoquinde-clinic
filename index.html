@@ -3,114 +3,166 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Diego Quinde · Investigación clínica e IA sistémica</title>
-<meta name="description" content="Diego Andrés Quinde Probst — psicólogo clínico / clinical psychologist. Open-source research at the intersection of brief strategic & systemic therapy and language models: formal corpora, family-systems simulators, and AI evaluation in psychotherapy.">
-<meta property="og:title" content="Diego Quinde · Clinical research & systemic AI">
-<meta property="og:description" content="Interactive models and writing at the intersection of systemic therapy and AI.">
+<title>quinde research · Investigación clínica e IA sistémica</title>
+<meta name="description" content="quinde research — la línea de investigación abierta de Diego Quinde Probst en la frontera entre la terapia breve estratégica/sistémica y la inteligencia artificial: corpus formales, simuladores de sistemas familiares y evaluación de IA en psicoterapia. Español primero, reproducible, 100% sintético.">
+<meta property="og:title" content="quinde research · Clinical research & systemic AI">
+<meta property="og:description" content="Open research at the frontier of brief strategic / systemic therapy and AI. Spanish-first, reproducible, synthetic-only.">
 <meta property="og:type" content="website">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230f6e56'/%3E%3Ctext x='16' y='23' font-size='20' font-weight='700' text-anchor='middle' fill='white' font-family='-apple-system,sans-serif'%3Eq%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232a4b66'/%3E%3Ctext x='16' y='23' font-size='19' font-weight='300' text-anchor='middle' font-family='-apple-system,Helvetica,sans-serif'%3E%3Ctspan fill='%23ebeffe'%3Eq%3C/tspan%3E%3Ctspan fill='%230f6e56' font-weight='600'%3E.%3C/tspan%3E%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700&family=Alex+Brush&display=swap" rel="stylesheet">
 <style>
 :root{
-  --tinta:#1b2230; --gris:#5c616d; --suave:#8a8f9b; --linea:#e7e9ef;
-  --fondo:#fbfbfc; --panel:#ffffff;
-  --teal:#0f6e56; --teal-50:#e3f4ee; --coral:#d4533a; --azul:#3f5bd1; --verde:#2aa876;
-  --r:14px;
+  /* ── Paleta de marca quinde ── */
+  --ink:#2a4b66; --ink-soft:#3d617e; --mist:#ebeffe; --sky:#c1dceb; --fog:#afbcc6;
+  --paper:#ffffff; --paper-warm:#f7f8fa;
+  --rule:rgba(42,75,102,.18); --rule-soft:rgba(42,75,102,.10);
+  /* señal research */
+  --teal:#0f6e56; --teal-soft:#1f8f6a; --teal-line:rgba(15,110,86,.30); --teal-wash:#eef5f1;
+  /* paleta funcional · figuras científicas */
+  --sym:#d24f68; --rig:#3f63d4; --agc:#1f8f6a; --neu:#737d8c;
+  --sans:'Manrope',ui-sans-serif,system-ui,-apple-system,'Helvetica Neue',Arial,sans-serif;
+  --script:'Alex Brush','Snell Roundhand','Apple Chancery',cursive;
+  --ease:cubic-bezier(.32,.08,.24,1);
 }
 *{box-sizing:border-box;margin:0}
 html{scroll-behavior:smooth}
-body{font-family:-apple-system,'Segoe UI',Roboto,Helvetica,sans-serif;color:var(--tinta);
-  background:var(--fondo);line-height:1.65;-webkit-font-smoothing:antialiased}
-.wrap{max-width:940px;margin:0 auto;padding:0 24px}
-nav{position:sticky;top:0;z-index:10;background:rgba(251,251,252,.86);backdrop-filter:blur(8px);
-  border-bottom:1px solid var(--linea)}
-nav .wrap{display:flex;align-items:center;justify-content:space-between;height:58px}
-nav .brand{font-weight:600;letter-spacing:-.01em}
-nav .brand b{color:var(--teal)}
-nav a{color:var(--gris);text-decoration:none;font-size:14px;margin-left:22px}
-nav a:hover{color:var(--tinta)}
+body{font-family:var(--sans);font-weight:400;color:var(--ink);background:var(--paper);
+  line-height:1.65;letter-spacing:.005em;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+.wrap{max-width:960px;margin:0 auto;padding:0 24px}
+a{color:inherit}
+
+/* ── Nav ── */
+nav{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.85);backdrop-filter:blur(9px);
+  border-bottom:1px solid var(--rule)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+.brand{display:inline-flex;align-items:center;gap:11px;line-height:1;text-decoration:none}
+.brand .wm{font-weight:200;letter-spacing:-.022em;font-size:21px;color:var(--ink)}
+.brand .dot{color:var(--teal)}
+.brand .b-rule{width:1px;height:17px;background:var(--teal)}
+.brand .desc{font-size:8.5px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-soft)}
 nav .links{display:flex;align-items:center}
-@media(max-width:600px){nav .links a{display:none}}
+nav .links a{color:var(--ink-soft);text-decoration:none;font-size:12px;font-weight:500;
+  letter-spacing:.04em;margin-left:22px;transition:color .2s}
+nav .links a:hover{color:var(--ink)}
+@media(max-width:640px){nav .links a{display:none}}
 
 /* selector de idioma */
-.langsw{display:inline-flex;margin-left:22px;border:1px solid var(--linea);border-radius:8px;overflow:hidden}
-.langsw button{font:inherit;font-size:12px;font-weight:600;letter-spacing:.02em;padding:5px 9px;
-  border:0;background:#fff;color:var(--suave);cursor:pointer;transition:background .15s,color .15s}
-.langsw button.on{background:var(--teal);color:#fff}
-.langsw button:hover:not(.on){background:#f4f5f8}
+.langsw{display:inline-flex;margin-left:22px;border:1px solid var(--rule)}
+.langsw button{font:inherit;font-size:10.5px;font-weight:600;letter-spacing:.1em;padding:5px 9px;
+  border:0;background:transparent;color:var(--fog);cursor:pointer;transition:.2s}
+.langsw button.on{background:var(--ink);color:var(--mist)}
+.langsw button:hover:not(.on){color:var(--ink)}
 
-.hero{padding:64px 0 28px}
-.hero .eyebrow{font-size:12.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--teal);
-  font-weight:600}
-.hero h1{font-size:clamp(30px,5.2vw,50px);line-height:1.08;letter-spacing:-.02em;font-weight:600;
-  margin-top:14px;max-width:18ch}
-.hero p{font-size:18.5px;color:var(--gris);margin-top:20px;max-width:60ch}
-.hero .who{margin-top:22px;font-size:14.5px;color:var(--suave)}
-.hero .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
-.btn{display:inline-flex;align-items:center;gap:8px;font-size:14.5px;font-weight:500;
-  text-decoration:none;border-radius:10px;padding:11px 18px;border:1px solid var(--linea);
-  background:#fff;color:var(--tinta);transition:.15s}
-.btn:hover{border-color:var(--suave)}
-.btn.primary{background:var(--teal);color:#fff;border-color:var(--teal)}
+/* ── Tipografía utilitaria ── */
+.eyebrow{display:inline-flex;align-items:center;gap:11px;font-size:10px;font-weight:500;
+  letter-spacing:.3em;text-transform:uppercase;color:var(--teal)}
+.eyebrow::before{content:"";width:34px;height:1px;background:var(--teal)}
 
-section{padding:40px 0}
-.s-label{font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--suave);
-  margin-bottom:18px}
-h2.section{font-size:26px;letter-spacing:-.01em;margin-bottom:8px}
-.section-lead{color:var(--gris);max-width:64ch;margin-bottom:22px}
+section{padding:46px 0}
+.s-label{display:flex;align-items:center;gap:11px;font-size:9.5px;font-weight:500;
+  letter-spacing:.3em;text-transform:uppercase;color:var(--ink);margin-bottom:18px}
+.s-label::before{content:"";width:30px;height:1px;background:var(--ink)}
+h2.section{font-size:clamp(24px,3vw,30px);font-weight:300;letter-spacing:-.012em;
+  line-height:1.12;margin-bottom:10px}
+.section-lead{color:var(--ink-soft);font-weight:300;font-size:15px;max-width:64ch;margin-bottom:24px;text-wrap:pretty}
 
-/* modelo interactivo */
-.lab{border:1px solid var(--linea);border-radius:var(--r);background:var(--panel);overflow:hidden}
-.lab .head{padding:16px 20px;border-bottom:1px solid var(--linea);display:flex;
+/* ── Hero ── */
+.hero{position:relative;padding:72px 0 32px;overflow:hidden}
+.hero .inner{position:relative;z-index:2}
+.hero h1{font-size:clamp(34px,5.6vw,62px);font-weight:200;line-height:1.02;letter-spacing:-.025em;
+  margin-top:18px;max-width:17ch}
+.hero .lede{font-size:19px;font-weight:300;color:var(--ink-soft);margin-top:22px;max-width:60ch;text-wrap:pretty}
+.hero .lede strong{font-weight:600;color:var(--ink)}
+.hero .who{margin-top:24px;font-size:13px;font-weight:500;letter-spacing:.04em;color:var(--fog)}
+.hero .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.hero .bird-wm{position:absolute;right:-40px;top:54px;width:380px;color:var(--ink);
+  opacity:.06;pointer-events:none;z-index:1}
+@media(max-width:760px){.hero .bird-wm{width:240px;right:-60px;top:30px}}
+
+.btn{display:inline-flex;align-items:center;gap:9px;font-size:10.5px;font-weight:500;
+  letter-spacing:.18em;text-transform:uppercase;text-decoration:none;padding:13px 22px;
+  border:1px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer;
+  transition:background .28s var(--ease),color .28s var(--ease),border-color .28s var(--ease)}
+.btn:hover{background:var(--ink);color:var(--mist)}
+.btn.primary{background:var(--ink);color:var(--mist)}
+.btn.primary:hover{background:var(--teal);border-color:var(--teal)}
+
+/* ── Modelo interactivo ── */
+.lab{border:1px solid var(--rule);background:var(--paper)}
+.lab .head{padding:16px 20px;border-bottom:1px solid var(--rule);display:flex;
   justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
-.lab .head .t{font-size:13px;letter-spacing:.07em;text-transform:uppercase;color:var(--suave)}
-.lab .controls{display:flex;gap:8px;flex-wrap:wrap}
-.toggle{display:inline-flex;border:1px solid var(--linea);border-radius:9px;overflow:hidden}
-.toggle button{font:inherit;font-size:13px;padding:7px 13px;border:0;background:#fff;
-  color:var(--gris);cursor:pointer;transition:background .15s,color .15s}
-.toggle button:hover:not(.on){background:#f4f5f8}
-.toggle button.on{background:var(--teal);color:#fff}
+.lab .head .t{font-size:9.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--fog)}
+.lab .controls{display:flex;gap:10px;flex-wrap:wrap}
+.toggle{display:inline-flex;border:1px solid var(--rule)}
+.toggle button{font:inherit;font-size:11px;font-weight:500;letter-spacing:.04em;padding:7px 13px;
+  border:0;background:transparent;color:var(--ink-soft);cursor:pointer;transition:background .2s,color .2s}
+.toggle button:hover:not(.on){background:var(--paper-warm)}
+.toggle button.on{background:var(--ink);color:var(--mist)}
 .toggle[aria-disabled="true"]{opacity:.38;pointer-events:none}
-#curve{transition:stroke-dashoffset .1s}
-#dots circle{transition:cx .5s cubic-bezier(.4,0,.2,1),cy .5s cubic-bezier(.4,0,.2,1)}
+.lab .body{padding:20px}
+.lab .read{padding:15px 20px;border-top:1px solid var(--rule);background:var(--teal-wash);
+  font-size:13.5px;color:var(--ink-soft)}
+.lab .read b{color:var(--ink);font-weight:600}
+#chart .axis line{stroke:var(--rule-soft)}
+.ylab{fill:var(--fog)} .xlab{fill:var(--ink-soft)}
+#ivline{stroke:var(--ink)} #ivlabel{fill:var(--ink-soft)}
+#curve{stroke:var(--sym);transition:stroke-dashoffset .1s}
+#dots circle{fill:var(--sym);transition:cx .5s var(--ease),cy .5s var(--ease)}
 @media(prefers-reduced-motion:reduce){#dots circle{transition:none}}
-.lab .body{padding:18px 20px}
-.lab .read{padding:14px 20px;border-top:1px solid var(--linea);background:#fafbfc;font-size:14px;
-  color:var(--gris)}
-.lab .read b{color:var(--tinta)}
-svg .axis{stroke:#eef0f5}
-svg text{font-family:-apple-system,sans-serif}
+svg text{font-family:var(--sans)}
+.caption{margin-top:14px;font-size:12px;color:var(--fog)}
+.caption em{font-style:italic}
 
+/* ── Tarjetas / líneas de investigación ── */
 .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.card{border:1px solid var(--linea);border-radius:var(--r);background:var(--panel);padding:20px}
-.card .n{font-size:12px;font-weight:600;color:var(--teal);letter-spacing:.04em}
-.card h3{font-size:16px;margin:6px 0}
-.card p{font-size:14px;color:var(--gris)}
+.card{border:1px solid var(--rule);background:var(--paper);padding:22px}
+.card .n{font-size:10px;font-weight:600;color:var(--teal);letter-spacing:.16em}
+.card h3{font-size:16px;font-weight:600;margin:8px 0 6px}
+.card p{font-size:13.5px;font-weight:400;color:var(--ink-soft);text-wrap:pretty}
 
-.pub{border:1px solid var(--linea);border-left:4px solid var(--teal);border-radius:0 var(--r) var(--r) 0;
-  background:var(--panel);padding:22px 24px}
-.pub .tag{font-size:12px;color:var(--teal);font-weight:600;letter-spacing:.05em;text-transform:uppercase}
-.pub h3{font-size:19px;margin:8px 0;line-height:1.25}
-.pub p{font-size:14.5px;color:var(--gris)}
-.pub .meta{font-size:13px;color:var(--suave);margin-top:10px}
+/* ── Publicaciones ── */
+.pub{border:1px solid var(--rule);border-left:2px solid var(--teal);background:var(--paper);padding:24px 26px}
+.pub .tag{font-size:10px;color:var(--teal);font-weight:600;letter-spacing:.18em;text-transform:uppercase}
+.pub h3{font-size:19px;font-weight:300;letter-spacing:-.01em;margin:10px 0;line-height:1.3}
+.pub p{font-size:14px;font-weight:400;color:var(--ink-soft);text-wrap:pretty}
+.pub .meta{font-size:12.5px;color:var(--fog);margin-top:12px}
 .pub .meta a{color:var(--teal);text-decoration:none}
+.pub .meta a:hover{text-decoration:underline}
 
+/* ── Divulgación ── */
 .write{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.note{border:1px dashed var(--linea);border-radius:var(--r);padding:20px;background:var(--panel)}
-.note h3{font-size:16px}.note p{font-size:14px;color:var(--gris);margin-top:4px}
-.note .soon{font-size:11.5px;color:var(--suave);letter-spacing:.06em;text-transform:uppercase}
+.note{border:1px dashed var(--rule);padding:22px;background:var(--paper)}
+.note h3{font-size:16px;font-weight:500}
+.note p{font-size:13.5px;color:var(--ink-soft);margin-top:5px;text-wrap:pretty}
+.note .soon{font-size:9.5px;color:var(--fog);letter-spacing:.22em;text-transform:uppercase;font-weight:500}
 
-footer{border-top:1px solid var(--linea);margin-top:36px;padding:28px 0 48px;font-size:13.5px;
-  color:var(--suave)}
+/* ── Footer ── */
+footer{border-top:1px solid var(--rule);margin-top:40px;padding:34px 0 52px;font-size:13px;color:var(--ink-soft)}
+footer .row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
+footer .name{font-weight:600;color:var(--ink);font-size:14px}
+footer .role{color:var(--ink-soft)}
 footer a{color:var(--teal);text-decoration:none}
-footer .row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
-.aviso{font-size:12px;margin-top:14px;max-width:70ch}
+footer a:hover{text-decoration:underline}
+.dash{color:var(--teal)}
+.stamps{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+.stamp{font-size:8.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--teal);
+  border:1px solid var(--teal-line);padding:5px 9px}
+.aviso{font-size:11.5px;color:var(--fog);margin-top:18px;max-width:74ch;text-wrap:pretty}
+.colofon{display:flex;align-items:center;gap:10px;margin-top:22px;font-size:11px;color:var(--fog);letter-spacing:.02em}
+.colofon .bird{width:30px;color:var(--ink);opacity:.5}
 @media(max-width:680px){.cards,.write{grid-template-columns:1fr}}
 </style>
 </head>
-<body>
+<body id="top">
 
 <nav><div class="wrap">
-  <div class="brand">Diego Quinde<b>.</b></div>
+  <a class="brand" href="#top" aria-label="quinde research">
+    <span class="wm">quinde<span class="dot">.</span></span>
+    <span class="b-rule"></span>
+    <span class="desc">research</span>
+  </a>
   <div class="links">
     <a href="#investigacion" data-en="Research">Investigación</a>
     <a href="#modelo" data-en="Models">Modelos</a>
@@ -126,16 +178,26 @@ footer .row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
 <div class="wrap">
 
   <section class="hero">
-    <div class="eyebrow" data-en="Clinical psychology · Brief strategic &amp; systemic therapy · AI">Psicología clínica · Terapia breve estratégica y sistémica · IA</div>
-    <h1 data-en="Making systems theory visible and measurable.">Hacer visible y medible la teoría de los sistemas.</h1>
-    <p data-en="I work at the intersection of brief strategic / systemic therapy and language models: I turn clinical knowledge into <strong>formal corpora</strong>, <strong>family-systems simulators</strong> and <strong>AI evaluations</strong> for psychotherapy. All open source, reproducible, built in Spanish.">Investigo en la intersección de la terapia breve estratégica/sistémica y los modelos de
-      lenguaje: convierto el conocimiento clínico en <strong>corpus formales</strong>,
-      <strong>simuladores de sistemas familiares</strong> y <strong>evaluaciones de IA</strong>
-      para psicoterapia. Todo open source, en español, reproducible.</p>
-    <div class="who" data-en="Diego Andrés Quinde Probst · clinical psychologist · Santo Domingo, Ecuador">Diego Andrés Quinde Probst · psicólogo clínico · Santo Domingo, Ecuador</div>
-    <div class="cta">
-      <a class="btn primary" href="#modelo" data-en="Try an interactive model">Probar un modelo interactivo</a>
-      <a class="btn" href="#publicaciones" data-en="See publications">Ver publicaciones</a>
+    <!-- colibrí · marca de agua (hairline) -->
+    <svg class="bird-wm" viewBox="0 0 100 70" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <line x1="2" y1="34" x2="34" y2="36"/>
+      <path d="M34 36 Q40 28 50 32 Q62 36 64 44 Q60 52 48 50 Q38 48 34 42 Z"/>
+      <circle cx="40" cy="35" r="0.8" fill="currentColor" stroke="none"/>
+      <path d="M44 30 Q54 14 76 18 Q66 28 52 34"/>
+      <line x1="64" y1="44" x2="84" y2="48"/><line x1="64" y1="46" x2="86" y2="54"/><line x1="62" y1="48" x2="80" y2="58"/>
+    </svg>
+    <div class="inner">
+      <div class="eyebrow" data-en="Brief strategic &amp; systemic therapy · AI">Terapia breve estratégica y sistémica · IA</div>
+      <h1 data-en="Making systems theory visible and measurable.">Hacer visible y medible la teoría de los sistemas.</h1>
+      <p class="lede" data-en="<strong>quinde research</strong> is the open research line of Diego Quinde at the frontier of brief strategic / systemic therapy and language models: formal corpora of clinical language, family-systems simulators, and AI evaluations for psychotherapy. Spanish-first, reproducible, 100% synthetic."><strong>quinde research</strong> es la línea de investigación abierta de Diego Quinde en la
+        frontera entre la terapia breve estratégica/sistémica y los modelos de lenguaje: corpus
+        formales del lenguaje clínico, simuladores de sistemas familiares y evaluaciones de IA
+        para psicoterapia. Español primero, reproducible, 100% sintético.</p>
+      <div class="who" data-en="Diego Quinde Probst · clinical psychologist · Santo Domingo, Ecuador">Diego Quinde Probst · psicólogo clínico · Santo Domingo, Ecuador</div>
+      <div class="cta">
+        <a class="btn primary" href="#modelo" data-en="Try an interactive model">Probar un modelo interactivo</a>
+        <a class="btn" href="#publicaciones" data-en="See publications">Ver publicaciones</a>
+      </div>
     </div>
   </section>
 
@@ -164,17 +226,17 @@ footer .row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
       <div class="body">
         <svg id="chart" viewBox="0 0 840 340" role="img" aria-label="Trayectoria interactiva del síntoma / Interactive symptom trajectory" style="width:100%;height:auto">
           <g class="axis"><line x1="60" y1="40" x2="800" y2="40"/><line x1="60" y1="130" x2="800" y2="130"/><line x1="60" y1="220" x2="800" y2="220"/><line x1="60" y1="280" x2="800" y2="280"/></g>
-          <g font-size="11" fill="#9aa3b2"><text x="50" y="44" text-anchor="end">10</text><text x="50" y="224" text-anchor="end">3</text><text x="50" y="284" text-anchor="end">0</text></g>
-          <line id="ivline" x1="245" y1="30" x2="245" y2="280" stroke="#48505e" stroke-dasharray="5 4"/>
-          <text id="ivlabel" x="245" y="24" text-anchor="middle" font-size="11" fill="#48505e">intervención</text>
-          <g font-size="11.5" fill="#737d8c"><text x="60" y="305" text-anchor="middle">S1</text><text x="245" y="305" text-anchor="middle">S2</text><text x="430" y="305" text-anchor="middle">S3</text><text x="615" y="305" text-anchor="middle">S4</text><text x="800" y="305" text-anchor="middle">S5</text></g>
-          <polyline id="curve" fill="none" stroke="#d4533a" stroke-width="2.8" stroke-linejoin="round" points=""/>
+          <g class="ylab" font-size="11"><text x="50" y="44" text-anchor="end">10</text><text x="50" y="224" text-anchor="end">3</text><text x="50" y="284" text-anchor="end">0</text></g>
+          <line id="ivline" x1="245" y1="30" x2="245" y2="280" stroke-dasharray="5 4"/>
+          <text id="ivlabel" x="245" y="24" text-anchor="middle" font-size="11">intervención</text>
+          <g class="xlab" font-size="11.5"><text x="60" y="305" text-anchor="middle">S1</text><text x="245" y="305" text-anchor="middle">S2</text><text x="430" y="305" text-anchor="middle">S3</text><text x="615" y="305" text-anchor="middle">S4</text><text x="800" y="305" text-anchor="middle">S5</text></g>
+          <polyline id="curve" fill="none" stroke-width="2.8" stroke-linejoin="round" points=""/>
           <g id="dots"></g>
         </svg>
       </div>
       <div class="read" id="readout"></div>
     </div>
-    <p class="section-lead" style="margin-top:14px;font-size:13.5px;color:var(--suave)" data-en="Synthetic, illustrative data — from the preprint <em>Simulating family systems with LLM agents</em>. They do not represent any real family.">
+    <p class="caption" data-en="Synthetic, illustrative data — from the preprint <em>Simulating family systems with LLM agents</em>. They do not represent any real family.">
       Datos sintéticos, ilustrativos — del preprint <em>Simulating family systems with LLM
       agents</em>. No representan a ninguna familia real.</p>
   </section>
@@ -184,13 +246,13 @@ footer .row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
     <div class="s-label" data-en="Research lines">Líneas de investigación</div>
     <h2 class="section" data-en="What I build">Qué construyo</h2>
     <div class="cards">
-      <div class="card"><div class="n" data-en="01 · LANGUAGE">01 · LENGUAJE</div><h3 data-en="Formal corpus">Corpus formal</h3>
+      <div class="card"><div class="n">01 · LENGUAJE</div><h3 data-en="Formal corpus">Corpus formal</h3>
         <p data-en="A cited, machine-readable taxonomy of the maneuvers and patterns of brief strategic therapy. Clinical vocabulary turned into data.">Taxonomía citada y legible por máquina de las maniobras y patrones de la terapia breve
           estratégica. El vocabulario clínico convertido en datos.</p></div>
-      <div class="card"><div class="n" data-en="02 · SIMULATION">02 · SIMULACIÓN</div><h3 data-en="Family systems">Sistemas familiares</h3>
+      <div class="card"><div class="n">02 · SIMULACIÓN</div><h3 data-en="Family systems">Sistemas familiares</h3>
         <p data-en="LLM agents that simulate a family's dynamics and let you rehearse interventions before the session, in counterfactual.">Agentes LLM que simulan la dinámica de una familia y permiten ensayar intervenciones
           antes de la sesión, en contrafactual.</p></div>
-      <div class="card"><div class="n" data-en="03 · EVALUATION">03 · EVALUACIÓN</div><h3 data-en="AI in psychotherapy">IA en psicoterapia</h3>
+      <div class="card"><div class="n">03 · EVALUACIÓN</div><h3 data-en="AI in psychotherapy">IA en psicoterapia</h3>
         <p data-en="Benchmarks of how well models recognize systemic patterns and propose maneuvers — with clinical validation.">Benchmarks de qué tan bien los modelos reconocen patrones sistémicos y proponen
           maniobras — con validación clínica.</p></div>
     </div>
@@ -209,7 +271,7 @@ footer .row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
         sintéticos.</p>
       <div class="meta">
         <span data-en="Data &amp; code:">Datos y código:</span> <a href="https://doi.org/10.5281/zenodo.20748639">10.5281/zenodo.20748639</a>
-        · Preprint: <span style="color:var(--suave)" data-en="PsyArXiv (under moderation)">PsyArXiv (en moderación)</span>
+        · Preprint: <span style="color:var(--fog)" data-en="PsyArXiv (under moderation)">PsyArXiv (en moderación)</span>
         · <a href="https://github.com/diegoqprobst/quinde-clinica-local">GitHub</a>
       </div>
     </div>
@@ -236,18 +298,37 @@ footer .row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
   <footer id="contacto">
     <div class="row">
       <div>
-        <strong>Diego Andrés Quinde Probst</strong><br>
-        <span data-en="Clinical psychologist · Independent researcher · Santo Domingo, Ecuador">Psicólogo clínico · Independent researcher · Santo Domingo, Ecuador</span>
+        <div class="name">Diego Quinde Probst</div>
+        <div class="role" data-en="Clinical psychologist · independent researcher · Santo Domingo, Ecuador">Psicólogo clínico · investigador independiente · Santo Domingo, Ecuador</div>
       </div>
       <div>
         <a href="mailto:diegoaquinde@gmail.com">diegoaquinde@gmail.com</a><br>
-        <a href="https://orcid.org/0009-0005-7107-8897">ORCID 0009-0005-7107-8897</a><br>
+        ORCID <a href="https://orcid.org/0009-0005-7107-8897"><span class="dash">0009-0005-7107-8897</span></a><br>
         <a href="https://github.com/diegoqprobst">GitHub</a>
       </div>
     </div>
-    <div class="aviso" data-en="All research material uses 100% synthetic data. The tools support systemic thinking and training; they do not predict real cases or replace clinical judgment. They are not medical devices.">El material de investigación usa datos 100% sintéticos. Las herramientas son
-      apoyo para pensar y formarse en clave sistémica; no predicen casos reales ni sustituyen el
-      juicio clínico. No son dispositivos médicos.</div>
+
+    <div class="stamps" aria-label="Declaración">
+      <span class="stamp" data-en="100% synthetic">100% sintético</span>
+      <span class="stamp" data-en="Not a medical device">No es un dispositivo médico</span>
+      <span class="stamp" data-en="Open source">Código abierto</span>
+      <span class="stamp" data-en="Runs locally">Corre en local</span>
+    </div>
+
+    <div class="aviso" data-en="All research material uses 100% synthetic data. The tools support systemic thinking and training; they do not predict real cases or replace clinical judgment. They are not medical devices.">El material de investigación usa datos 100% sintéticos. Las herramientas son apoyo para
+      pensar y formarse en clave sistémica; no predicen casos reales ni sustituyen el juicio
+      clínico. No son dispositivos médicos.</div>
+
+    <div class="colofon">
+      <svg class="bird" viewBox="0 0 100 70" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <line x1="2" y1="34" x2="34" y2="36"/>
+        <path d="M34 36 Q40 28 50 32 Q62 36 64 44 Q60 52 48 50 Q38 48 34 42 Z"/>
+        <circle cx="40" cy="35" r="0.8" fill="currentColor" stroke="none"/>
+        <path d="M44 30 Q54 14 76 18 Q66 28 52 34"/>
+        <line x1="64" y1="44" x2="84" y2="48"/><line x1="64" y1="46" x2="86" y2="54"/><line x1="62" y1="48" x2="80" y2="58"/>
+      </svg>
+      <span data-en="quinde · the hummingbird was already in the name">quinde · el colibrí ya estaba en el nombre</span>
+    </div>
   </footer>
 
 </div>
@@ -263,7 +344,7 @@ const DATA = {
   con_ejecuta:[8, 6, 5, 4, 5],            // ejecutada: desbloqueo (cambio 2)
   con_neutra: [8, 8, 8, 8, 8],            // neutralizada: homeostasis
 };
-// textos del modelo, bilingües (la lectura dinámica + la etiqueta del eje).
+// textos del modelo, bilingües (lectura dinámica + etiqueta del eje).
 const READ = {
   es: {
     iv: 'intervención',
@@ -278,7 +359,7 @@ const READ = {
     neutra: '<b>Maneuver neutralized.</b> The system absorbs the intervention and the symptom stays flat: homeostatic resistance (happens ~60% of the time).'
   }
 };
-const TITLE = { es: 'Diego Quinde · Investigación clínica e IA sistémica', en: 'Diego Quinde · Clinical research & systemic AI' };
+const TITLE = { es: 'quinde research · Investigación clínica e IA sistémica', en: 'quinde research · Clinical research & systemic AI' };
 
 let interv = 'con', resp = 'ejecuta', LANG = 'es';
 
@@ -287,7 +368,7 @@ const dotsG = document.getElementById('dots');
 const dotEls = X.map((x,i)=>{
   const c = document.createElementNS('http://www.w3.org/2000/svg','circle');
   c.setAttribute('cx', x); c.setAttribute('cy', Y(8)); c.setAttribute('r', 4.5);
-  c.setAttribute('fill', '#d4533a'); dotsG.appendChild(c); return c;
+  dotsG.appendChild(c); return c;
 });
 
 function serie(){
@@ -302,7 +383,6 @@ function pintar(){
   document.getElementById('ivline').style.display = showIv ? '' : 'none';
   document.getElementById('ivlabel').style.display = showIv ? '' : 'none';
   document.getElementById('ivlabel').textContent = R.iv;
-  // el control de respuesta solo aplica cuando hay intervención.
   document.getElementById('tg-resp').setAttribute('aria-disabled', showIv ? 'false' : 'true');
   document.getElementById('readout').innerHTML =
     interv === 'sin' ? R.sin : (resp === 'ejecuta' ? R.ejecuta : R.neutra);
