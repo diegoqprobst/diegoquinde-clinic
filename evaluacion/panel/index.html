@@ -1,0 +1,511 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Panel de evaluaciones · Diego Quinde Probst</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23141628'/%3E%3Ctext x='16' y='23' font-size='19' font-weight='300' text-anchor='middle' font-family='Georgia,serif'%3E%3Ctspan fill='%23f5f2ea'%3Eq%3C/tspan%3E%3Ctspan fill='%23eec06a' font-weight='600'%3E.%3C/tspan%3E%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Hanken+Grotesk:wght@300..700&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --u-ink-0: oklch(13% 0.045 278);
+  --u-ink-1: oklch(18.5% 0.055 278);
+  --u-ink-2: oklch(23% 0.062 277);
+  --u-hair:   oklch(82% 0.04 280 / 0.13);
+  --u-hair-2: oklch(82% 0.04 280 / 0.26);
+  --u-paper:      oklch(96% 0.01 85);
+  --u-paper-dim:  oklch(80% 0.022 280);
+  --u-paper-mute: oklch(68.5% 0.03 280);
+  --u-light:      oklch(82% 0.15 75);
+  --u-light-deep: oklch(72% 0.15 62);
+  --u-alert:      oklch(74% 0.19 8);
+  --u-ok:         oklch(84% 0.12 200);
+  --u-r: 14px;
+  --u-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --u-maxw: 900px;
+  --serif:'Fraunces',Georgia,serif;
+  --sans:'Hanken Grotesk',system-ui,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+}
+*{box-sizing:border-box;margin:0}
+body{font-family:var(--sans);font-size:16px;font-weight:380;line-height:1.6;letter-spacing:-.005em;
+  color:var(--u-paper);background:var(--u-ink-1);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.045;
+  mix-blend-mode:soft-light;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(46vw 40vw at 85% 0%, oklch(82% 0.15 75 / 0.1), transparent 60%)}
+body>*{position:relative;z-index:1}
+a{color:var(--u-light);text-decoration:none}
+button{font:inherit;cursor:pointer}
+
+nav{position:sticky;top:0;z-index:20;height:66px;display:flex;align-items:center;
+  background:oklch(18.5% 0.055 278 / 0.72);backdrop-filter:blur(18px) saturate(140%);
+  -webkit-backdrop-filter:blur(18px) saturate(140%);border-bottom:1px solid var(--u-hair)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;width:100%}
+.brand{display:inline-flex;align-items:center;gap:11px;color:var(--u-paper)}
+.brand .colibri{height:22px;width:auto;color:var(--u-light);flex-shrink:0;
+  filter:drop-shadow(0 0 7px oklch(82% 0.15 75 / 0.45))}
+.brand .wm{font-family:var(--serif);font-size:1.08rem;font-weight:600;letter-spacing:-.02em}
+.brand .wm b{color:var(--u-light)}
+.brand .desc{font-family:var(--mono);font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--u-paper-mute);border-left:1px solid var(--u-hair-2);padding-left:11px}
+.navacts{display:flex;gap:10px;align-items:center}
+
+.wrap{max-width:var(--u-maxw);margin:0 auto;padding:0 26px}
+.u-mono{font-family:var(--mono);font-size:.66rem;letter-spacing:.16em;text-transform:uppercase}
+
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.62rem;
+  font-weight:500;letter-spacing:.14em;text-transform:uppercase;padding:11px 18px;
+  border:1px solid var(--u-hair-2);border-radius:10px;background:transparent;color:var(--u-paper);
+  transition:all .3s var(--u-ease)}
+.btn:hover{border-color:var(--u-light);color:var(--u-light)}
+.btn.primary{background:var(--u-light);border-color:var(--u-light);color:var(--u-ink-0);font-weight:600}
+.btn.primary:hover{background:oklch(88% 0.13 78);box-shadow:0 0 22px oklch(82% 0.15 75 / 0.35)}
+.btn.ghost{border-color:var(--u-hair);color:var(--u-paper-mute)}
+.btn.ghost:hover{color:var(--u-paper);border-color:var(--u-hair-2)}
+.btn.danger{border-color:oklch(74% 0.19 8 / 0.5);color:var(--u-alert)}
+.btn.danger:hover{background:oklch(74% 0.19 8 / 0.12);border-color:var(--u-alert)}
+.btn[disabled]{opacity:.45;pointer-events:none}
+
+/* ── Login ── */
+#v-login{min-height:calc(100vh - 66px);display:none;align-items:center;justify-content:center;padding:40px 0}
+#v-login.on{display:flex}
+.logincard{width:min(420px,92vw);border:1px solid var(--u-hair);border-radius:var(--u-r);
+  background:radial-gradient(130% 120% at 85% 0%, oklch(82% 0.15 75 / 0.07), transparent 60%),
+    oklch(23% 0.062 277 / .45);padding:38px 34px}
+.logincard .colibri{height:34px;width:auto;color:var(--u-light);margin-bottom:20px;display:block;
+  filter:drop-shadow(0 0 10px oklch(82% 0.15 75 / 0.5))}
+.logincard h1{font-family:var(--serif);font-weight:360;font-size:1.7rem;letter-spacing:-.02em;margin-bottom:6px}
+.logincard h1 em{font-style:italic;color:var(--u-light)}
+.logincard .sub{color:var(--u-paper-mute);font-size:.9rem;margin-bottom:26px}
+.field{margin-bottom:16px}
+.field label{display:block;font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--u-paper-mute);margin-bottom:7px}
+input[type=email],input[type=password]{
+  font:inherit;font-size:.96rem;color:var(--u-paper);width:100%;padding:12px 14px;
+  border:1px solid var(--u-hair);border-radius:10px;background:oklch(23% 0.062 277 / .55);
+  outline:none;transition:border-color .25s var(--u-ease)}
+input:focus{border-color:var(--u-light)}
+.err{display:none;font-size:.88rem;color:var(--u-alert);margin:12px 0 0}
+.err.on{display:block}
+#btn-login{width:100%;justify-content:center;margin-top:10px;padding:14px}
+
+/* ── Lista ── */
+#v-list,#v-detail{display:none;padding:44px 0 80px}
+#v-list.on,#v-detail.on{display:block}
+.head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:30px}
+.kicker{display:inline-flex;align-items:center;gap:12px;font-family:var(--mono);font-size:.64rem;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--u-light);margin-bottom:14px}
+.kicker::after{content:"";width:44px;height:1px;background:var(--u-hair-2)}
+h1.title{font-family:var(--serif);font-weight:340;font-size:clamp(1.8rem,4.4vw,2.7rem);
+  line-height:1.05;letter-spacing:-.022em}
+h1.title em{font-style:italic;color:var(--u-light)}
+.headacts{display:flex;gap:10px;flex-wrap:wrap}
+.count{font-family:var(--mono);font-size:.64rem;letter-spacing:.12em;color:var(--u-paper-mute);margin-bottom:14px}
+
+.row{display:grid;grid-template-columns:120px 1fr auto;gap:18px;align-items:center;
+  padding:20px 4px;border-top:1px solid var(--u-hair);cursor:pointer;
+  transition:background .25s var(--u-ease)}
+.row:last-child{border-bottom:1px solid var(--u-hair)}
+.row:hover{background:oklch(82% 0.15 75 / 0.04)}
+.row .when{font-family:var(--mono);font-size:.68rem;letter-spacing:.06em;color:var(--u-paper-mute);line-height:1.5}
+.row .who .n{font-family:var(--serif);font-size:1.14rem;font-weight:460;letter-spacing:-.01em}
+.row .who .meta{font-size:.82rem;color:var(--u-paper-mute);margin-top:2px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.chip{font-family:var(--mono);font-size:.6rem;letter-spacing:.08em;padding:5px 10px;
+  border:1px solid var(--u-hair);border-radius:99px;color:var(--u-paper-dim);white-space:nowrap}
+.chip.warn{border-color:oklch(82% 0.15 75 / 0.5);color:var(--u-light)}
+.chip.alert{border-color:oklch(74% 0.19 8 / 0.6);color:var(--u-alert)}
+.empty{border:1px dashed var(--u-hair-2);border-radius:var(--u-r);padding:48px;text-align:center;
+  color:var(--u-paper-mute);font-size:.94rem}
+
+/* ── Detalle ── */
+.back{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.62rem;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--u-paper-mute);margin-bottom:24px;
+  background:none;border:none;padding:0;transition:color .25s}
+.back:hover{color:var(--u-light)}
+.d-meta{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 8px}
+.scores{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:28px 0}
+@media(max-width:680px){.scores{grid-template-columns:1fr}}
+.score{border:1px solid var(--u-hair);border-radius:var(--u-r);padding:18px 20px;
+  background:oklch(23% 0.062 277 / .35)}
+.score .k{font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--u-paper-mute);margin-bottom:8px}
+.score .v{font-family:var(--serif);font-size:1.9rem;font-weight:400;letter-spacing:-.02em;line-height:1}
+.score .v small{font-size:.9rem;color:var(--u-paper-mute);font-family:var(--sans)}
+.score .sev{display:inline-block;margin-top:9px;font-family:var(--mono);font-size:.6rem;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--u-light)}
+.score .sub3{margin-top:10px;display:flex;flex-direction:column;gap:5px;font-size:.84rem;color:var(--u-paper-dim)}
+.score .sub3 b{color:var(--u-paper);font-weight:560}
+.sec{margin:34px 0}
+.sec h2{font-family:var(--serif);font-weight:420;font-size:1.25rem;letter-spacing:-.015em;
+  margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--u-hair)}
+.qa{margin-bottom:16px}
+.qa .q{font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--u-paper-mute);margin-bottom:4px}
+.qa .a{font-size:.96rem;color:var(--u-paper-dim);white-space:pre-wrap}
+.qa .a:empty::after,.qa .a.blank::after{content:"— sin respuesta —";color:var(--u-paper-mute);opacity:.6;font-style:italic}
+details{border:1px solid var(--u-hair);border-radius:var(--u-r);margin-bottom:10px;overflow:hidden}
+summary{font-family:var(--mono);font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--u-paper-dim);padding:13px 18px;cursor:pointer;list-style:none;display:flex;justify-content:space-between}
+summary::after{content:"+";color:var(--u-light)}
+details[open] summary::after{content:"–"}
+summary:hover{color:var(--u-paper)}
+.items{border-top:1px solid var(--u-hair)}
+.item{display:grid;grid-template-columns:1fr auto;gap:14px;padding:10px 18px;font-size:.86rem;color:var(--u-paper-dim)}
+.item+.item{border-top:1px solid var(--u-hair)}
+.item .iv{font-family:var(--mono);font-size:.72rem;color:var(--u-paper);white-space:nowrap}
+.item.hot{background:oklch(74% 0.19 8 / 0.07)}
+.item.hot .iv{color:var(--u-alert)}
+.d-acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:38px;padding-top:24px;border-top:1px solid var(--u-hair)}
+.loading{padding:60px;text-align:center;color:var(--u-paper-mute);font-family:var(--mono);
+  font-size:.66rem;letter-spacing:.16em;text-transform:uppercase}
+
+footer{border-top:1px solid var(--u-hair);padding:26px 0 40px}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;
+  font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--u-paper-mute)}
+@media(max-width:680px){
+  .row{grid-template-columns:1fr;gap:8px}
+  .chips{justify-content:flex-start}
+  .brand .desc{display:none}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <a class="brand" href="/evaluacion/panel/" aria-label="Panel">
+    <svg class="colibri" viewBox="2 12 114 74" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M6 42 L42 48"/>
+      <path d="M42 48 Q52 38 64 44 Q78 51 76 62 Q73 70 60 68 Q47 65 42 48 Z"/>
+      <circle cx="49" cy="46" r="1.4" fill="currentColor" stroke="none"/>
+      <path d="M60 50 Q66 24 96 16 Q78 38 68 56"/>
+      <path d="M76 62 L106 64"/>
+      <path d="M76 64 L108 74"/>
+      <path d="M74 66 L100 80"/>
+    </svg>
+    <span class="wm">quinde<b>.</b></span>
+    <span class="desc">panel clínico</span>
+  </a>
+  <div class="navacts" id="navacts" style="display:none">
+    <button class="btn ghost" id="btn-csv">CSV</button>
+    <button class="btn ghost" id="btn-refresh">Actualizar</button>
+    <button class="btn ghost" id="btn-logout">Salir</button>
+  </div>
+</div></nav>
+
+<!-- ═══ LOGIN ═══ -->
+<div id="v-login">
+  <div class="logincard">
+    <svg class="colibri" viewBox="2 12 114 74" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M6 42 L42 48"/>
+      <path d="M42 48 Q52 38 64 44 Q78 51 76 62 Q73 70 60 68 Q47 65 42 48 Z"/>
+      <circle cx="49" cy="46" r="1.4" fill="currentColor" stroke="none"/>
+      <path d="M60 50 Q66 24 96 16 Q78 38 68 56"/>
+      <path d="M76 62 L106 64"/>
+      <path d="M76 64 L108 74"/>
+      <path d="M74 66 L100 80"/>
+    </svg>
+    <h1>Panel de <em>evaluaciones</em></h1>
+    <p class="sub">Acceso restringido — evaluaciones pre-consulta.</p>
+    <form id="loginform">
+      <div class="field"><label for="l-email">Correo</label>
+        <input type="email" id="l-email" autocomplete="username" required></div>
+      <div class="field"><label for="l-pass">Contraseña</label>
+        <input type="password" id="l-pass" autocomplete="current-password" required></div>
+      <div class="err" id="l-err"></div>
+      <button class="btn primary" id="btn-login" type="submit">Entrar</button>
+    </form>
+  </div>
+</div>
+
+<!-- ═══ LISTA ═══ -->
+<div id="v-list"><div class="wrap">
+  <div class="head">
+    <div>
+      <div class="kicker">Evaluaciones recibidas</div>
+      <h1 class="title">Pre-consulta, <em>en orden</em></h1>
+    </div>
+  </div>
+  <div class="count" id="count"></div>
+  <div id="rows"><div class="loading">Cargando…</div></div>
+</div></div>
+
+<!-- ═══ DETALLE ═══ -->
+<div id="v-detail"><div class="wrap">
+  <button class="back" id="btn-back">← Volver a la lista</button>
+  <div id="detail"></div>
+</div></div>
+
+<footer><div class="wrap">
+  <span>Diego Quinde Probst · Psicólogo clínico</span>
+  <span>Datos bajo secreto profesional</span>
+</div></footer>
+
+<script>
+'use strict';
+const API = 'https://z64bxs48.us-east.insforge.app/functions/panel';
+const TK = 'quinde-panel-token';
+const $ = id => document.getElementById(id);
+
+const PHQ9_ITEMS = [
+  'Poco interés o placer en hacer cosas',
+  'Decaído(a), deprimido(a) o sin esperanzas',
+  'Problemas de sueño (insomnio o dormir demasiado)',
+  'Cansancio o poca energía',
+  'Sin apetito o comer en exceso',
+  'Sentirse mal consigo mismo(a) / fracaso',
+  'Dificultad para concentrarse',
+  'Lentitud o agitación psicomotriz',
+  'Pensamientos de muerte o autolesión ⚠'
+];
+const GAD7_ITEMS = [
+  'Nervioso(a), ansioso(a), nervios de punta',
+  'No poder parar o controlar la preocupación',
+  'Preocuparse demasiado por cosas diferentes',
+  'Dificultad para relajarse',
+  'Inquietud, no poder quedarse quieto(a)',
+  'Molestarse o irritarse fácilmente',
+  'Miedo de que algo terrible pase'
+];
+const DASS_ITEMS = [
+  'Me costó mucho relajarme','Boca seca','Sin sentimientos positivos',
+  'Dificultad para respirar','Sin iniciativa','Reacciones exageradas','Temblor de manos',
+  'Muchos nervios','Preocupación por pánico/ridículo','Nada por qué vivir ⚠','Agitación',
+  'Difícil relajarse','Triste y deprimido(a)','Intolerancia a interrupciones','A punto de pánico',
+  'Sin entusiasmo','Valía personal baja','Irritabilidad','Latidos sin esfuerzo','Miedo sin razón',
+  'La vida sin sentido ⚠'
+];
+const FREC = ['Ningún día','Varios días','Más de la mitad','Casi todos los días'];
+const DASS_F = ['No me aplicó','Un poco','Bastante','Mucho'];
+
+let ROWS = [];
+
+/* ── vistas ── */
+function view(name){
+  ['v-login','v-list','v-detail'].forEach(v=>$(v).classList.toggle('on', v==='v-'+name));
+  $('navacts').style.display = name==='login' ? 'none' : 'flex';
+}
+const token = () => sessionStorage.getItem(TK);
+
+/* ── API ── */
+async function api(body){
+  const res = await fetch(API,{
+    method:'POST',
+    headers:{'Content-Type':'application/json', ...(token()?{Authorization:'Bearer '+token()}:{})},
+    body: JSON.stringify(body)
+  });
+  if(res.status===401 && body.action!=='login'){ sessionStorage.removeItem(TK); view('login'); throw new Error('sesión expirada'); }
+  const data = await res.json().catch(()=>({}));
+  if(!res.ok) throw new Error(data.error || ('HTTP '+res.status));
+  return data;
+}
+
+/* ── login ── */
+$('loginform').addEventListener('submit', async e=>{
+  e.preventDefault();
+  const btn = $('btn-login'), err = $('l-err');
+  btn.disabled = true; btn.textContent = 'Verificando…'; err.classList.remove('on');
+  try{
+    const { token: t } = await api({action:'login', email:$('l-email').value, password:$('l-pass').value});
+    sessionStorage.setItem(TK, t);
+    view('list'); load();
+  }catch(ex){
+    err.textContent = ex.message==='credenciales inválidas' ? 'Correo o contraseña incorrectos.' : 'No se pudo iniciar sesión: '+ex.message;
+    err.classList.add('on');
+  }finally{ btn.disabled = false; btn.textContent = 'Entrar'; }
+});
+$('btn-logout').addEventListener('click', ()=>{ sessionStorage.removeItem(TK); view('login'); });
+$('btn-refresh').addEventListener('click', load);
+$('btn-back').addEventListener('click', ()=>view('list'));
+
+/* ── lista ── */
+const fmtDate = iso => new Date(iso).toLocaleString('es-EC',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});
+const esc = s => String(s??'').replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+async function load(){
+  $('rows').innerHTML = '<div class="loading">Cargando…</div>';
+  try{
+    const { rows } = await api({action:'list'});
+    ROWS = rows;
+    $('count').textContent = rows.length + (rows.length===1?' evaluación':' evaluaciones');
+    if(!rows.length){ $('rows').innerHTML = '<div class="empty">Todavía no hay evaluaciones recibidas.</div>'; return; }
+    $('rows').innerHTML = rows.map((r,i)=>`
+      <div class="row" data-i="${i}">
+        <div class="when">${fmtDate(r.created_at)}</div>
+        <div class="who">
+          <div class="n">${esc(r.nombre)}</div>
+          <div class="meta">${r.edad??'—'} años · ${esc(r.contacto||'sin contacto')}</div>
+        </div>
+        <div class="chips">
+          ${r.alerta_riesgo?'<span class="chip alert">⚠ riesgo</span>':''}
+          <span class="chip ${r.phq9?.total>=10?'warn':''}">PHQ-9 ${r.phq9?.total??'—'}</span>
+          <span class="chip ${r.gad7?.total>=10?'warn':''}">GAD-7 ${r.gad7?.total??'—'}</span>
+          <span class="chip">DASS ${r.dass21?.depresion?.puntaje??'—'}·${r.dass21?.ansiedad?.puntaje??'—'}·${r.dass21?.estres?.puntaje??'—'}</span>
+        </div>
+      </div>`).join('');
+    document.querySelectorAll('.row').forEach(el=>
+      el.addEventListener('click', ()=>showDetail(ROWS[+el.dataset.i])));
+  }catch(ex){
+    $('rows').innerHTML = '<div class="empty">Error al cargar: '+esc(ex.message)+'</div>';
+  }
+}
+
+/* ── detalle ── */
+function itemsTable(labels, vals, opts, hotIdx){
+  return `<div class="items">${labels.map((t,i)=>`
+    <div class="item ${hotIdx&&hotIdx.includes(i)&&vals[i]>0?'hot':''}">
+      <span>${i+1}. ${esc(t)}</span>
+      <span class="iv">${vals?.[i]??'—'} · ${esc(opts[vals?.[i]]??'')}</span>
+    </div>`).join('')}</div>`;
+}
+function qa(label, value){
+  const blank = !value && value!==0;
+  return `<div class="qa"><div class="q">${esc(label)}</div><div class="a ${blank?'blank':''}">${esc(value??'')}</div></div>`;
+}
+function showDetail(r){
+  const h = r.historia||{}, d = r.datos||{};
+  $('detail').innerHTML = `
+    <div class="kicker">Evaluación · ${fmtDate(r.created_at)}</div>
+    <h1 class="title">${esc(r.nombre)}</h1>
+    <div class="d-meta">
+      ${r.alerta_riesgo?'<span class="chip alert">⚠ alerta de riesgo — revisar antes de sesión</span>':''}
+      <span class="chip">${r.edad??'—'} años</span>
+      <span class="chip">${esc(d.ocupacion||'ocupación —')}</span>
+      <span class="chip">${esc(r.contacto||'sin contacto')}</span>
+      <span class="chip">${r.duracion_min??'—'} min</span>
+      ${h.gravedad_0a10!=null?`<span class="chip warn">gravedad percibida ${h.gravedad_0a10}/10</span>`:''}
+    </div>
+
+    <div class="scores">
+      <div class="score"><div class="k">PHQ-9 · depresión</div>
+        <div class="v">${r.phq9?.total??'—'}<small> / 27</small></div>
+        <span class="sev">${esc(r.phq9?.severidad??'')}</span>
+        <div class="sub3">
+          <span>Ítem 9 (riesgo): <b>${r.phq9?.item9??'—'}</b></span>
+          <span>Impacto: <b>${esc(r.phq9?.impacto_funcional??'—')}</b></span>
+        </div></div>
+      <div class="score"><div class="k">GAD-7 · ansiedad</div>
+        <div class="v">${r.gad7?.total??'—'}<small> / 21</small></div>
+        <span class="sev">${esc(r.gad7?.severidad??'')}</span></div>
+      <div class="score"><div class="k">DASS-21 (×2)</div>
+        <div class="sub3">
+          <span>Depresión: <b>${r.dass21?.depresion?.puntaje??'—'}</b> · ${esc(r.dass21?.depresion?.severidad??'')}</span>
+          <span>Ansiedad: <b>${r.dass21?.ansiedad?.puntaje??'—'}</b> · ${esc(r.dass21?.ansiedad?.severidad??'')}</span>
+          <span>Estrés: <b>${r.dass21?.estres?.puntaje??'—'}</b> · ${esc(r.dass21?.estres?.severidad??'')}</span>
+        </div></div>
+    </div>
+
+    <div class="sec"><h2>Historia clínica</h2>
+      ${qa('Motivo de consulta', h.motivo)}
+      ${qa('Inicio y desencadenantes', h.inicio)}
+      ${qa('Intentos de solución', h.intentos_solucion)}
+      ${qa('Personas involucradas y sus reacciones', h.personas_involucradas)}
+      ${qa('Excepciones (mejora / empeora)', h.excepciones)}
+      ${qa('Atención psicológica previa', h.atencion_previa)}
+      ${qa('Salud, medicación, sueño, consumo', h.salud)}
+      ${qa('Objetivo — qué será diferente', h.objetivo)}
+      ${qa('Notas adicionales', h.extra)}
+      ${qa('Con quién vive', d.convivencia)}
+      ${qa('Cómo llegó', d.derivacion)}
+    </div>
+
+    <div class="sec"><h2>Respuestas ítem por ítem</h2>
+      <details><summary>PHQ-9</summary>${itemsTable(PHQ9_ITEMS, r.phq9?.items, FREC, [8])}</details>
+      <details><summary>GAD-7</summary>${itemsTable(GAD7_ITEMS, r.gad7?.items, FREC)}</details>
+      <details><summary>DASS-21</summary>${itemsTable(DASS_ITEMS, r.dass21?.items, DASS_F, [9,20])}</details>
+    </div>
+
+    <div class="d-acts">
+      <button class="btn primary" id="d-txt">Descargar informe (TXT)</button>
+      <button class="btn" id="d-json">Descargar JSON</button>
+      <button class="btn danger" id="d-del">Eliminar</button>
+    </div>`;
+  $('d-json').addEventListener('click', ()=>download(fileName(r,'json'), JSON.stringify(r,null,2), 'application/json'));
+  $('d-txt').addEventListener('click', ()=>download(fileName(r,'txt'), reporte(r), 'text/plain'));
+  $('d-del').addEventListener('click', async ()=>{
+    if(!confirm(`¿Eliminar definitivamente la evaluación de ${r.nombre}? Esta acción no se puede deshacer.`)) return;
+    try{ await api({action:'delete', id:r.id}); view('list'); load(); }
+    catch(ex){ alert('No se pudo eliminar: '+ex.message); }
+  });
+  view('detail');
+  window.scrollTo({top:0});
+}
+
+/* ── descargas ── */
+function fileName(r, ext){
+  const d = (r.created_at||'').slice(0,10);
+  return `evaluacion-${d}-${(r.nombre||'sin-nombre').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-')}.${ext}`;
+}
+function download(name, content, mime){
+  const blob = new Blob([content],{type:mime+';charset=utf-8'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob); a.download = name; a.click();
+  URL.revokeObjectURL(a.href);
+}
+function reporte(r){
+  const h = r.historia||{}, d = r.datos||{};
+  const L = [], w = s=>L.push(s), hr = ()=>w('─'.repeat(64));
+  w('EVALUACIÓN PRE-CONSULTA'); w('Diego Quinde Probst · psicólogo clínico'); hr();
+  w(`Paciente:   ${r.nombre??'—'}  (${r.edad??'—'} años)`);
+  w(`Contacto:   ${r.contacto??'—'}`);
+  w(`Ocupación:  ${d.ocupacion||'—'}   Convive con: ${d.convivencia||'—'}`);
+  w(`Derivación: ${d.derivacion||'—'}`);
+  w(`Recibida:   ${fmtDate(r.created_at)}   Duración: ${r.duracion_min??'—'} min`);
+  w(`ALERTA DE RIESGO: ${r.alerta_riesgo?'SÍ — revisar ítems marcados ⚠':'no'}`); hr();
+  w('PUNTAJES'); w('');
+  w(`  PHQ-9:  ${r.phq9?.total??'—'}/27 · ${r.phq9?.severidad??'—'} · ítem 9 = ${r.phq9?.item9??'—'} · impacto: ${r.phq9?.impacto_funcional??'—'}`);
+  w(`  GAD-7:  ${r.gad7?.total??'—'}/21 · ${r.gad7?.severidad??'—'}`);
+  w(`  DASS-21 (×2):  Dep ${r.dass21?.depresion?.puntaje??'—'} (${r.dass21?.depresion?.severidad??'—'}) · Ans ${r.dass21?.ansiedad?.puntaje??'—'} (${r.dass21?.ansiedad?.severidad??'—'}) · Est ${r.dass21?.estres?.puntaje??'—'} (${r.dass21?.estres?.severidad??'—'})`);
+  if(h.gravedad_0a10!=null) w(`  Gravedad percibida: ${h.gravedad_0a10}/10`);
+  hr(); w('HISTORIA CLÍNICA'); w('');
+  const p = (t,v)=>{ w(`· ${t}:`); w(v?String(v).split('\n').map(x=>'    '+x).join('\n'):'    —'); w(''); };
+  p('Motivo de consulta', h.motivo);
+  p('Inicio y desencadenantes', h.inicio);
+  p('Intentos de solución', h.intentos_solucion);
+  p('Personas involucradas', h.personas_involucradas);
+  p('Excepciones', h.excepciones);
+  p('Atención previa', h.atencion_previa);
+  p('Salud / medicación / sueño / consumo', h.salud);
+  p('Objetivo', h.objetivo);
+  p('Notas adicionales', h.extra);
+  hr(); w('RESPUESTAS ÍTEM POR ÍTEM'); w('');
+  w('PHQ-9  (0 ningún día · 1 varios · 2 más de la mitad · 3 casi todos)');
+  PHQ9_ITEMS.forEach((t,i)=>w(`  ${String(i+1).padStart(2)}. [${r.phq9?.items?.[i]??'—'}] ${t}`)); w('');
+  w('GAD-7');
+  GAD7_ITEMS.forEach((t,i)=>w(`  ${String(i+1).padStart(2)}. [${r.gad7?.items?.[i]??'—'}] ${t}`)); w('');
+  w('DASS-21  (0 no aplicó · 1 un poco · 2 bastante · 3 mucho)');
+  DASS_ITEMS.forEach((t,i)=>w(`  ${String(i+1).padStart(2)}. [${r.dass21?.items?.[i]??'—'}] ${t}`));
+  hr(); w('Documento clínico confidencial · uso exclusivo del profesional tratante.');
+  return L.join('\n');
+}
+
+/* CSV de todas */
+$('btn-csv').addEventListener('click', ()=>{
+  if(!ROWS.length) return alert('No hay evaluaciones para exportar.');
+  const cols = ['recibida','nombre','edad','contacto','ocupacion','convivencia','derivacion','gravedad_0a10',
+    'phq9_total','phq9_severidad','phq9_item9','phq9_impacto','gad7_total','gad7_severidad',
+    'dass_depresion','dass_dep_sev','dass_ansiedad','dass_ans_sev','dass_estres','dass_est_sev',
+    'alerta_riesgo','duracion_min','motivo'];
+  const cell = v => '"'+String(v??'').replace(/"/g,'""').replace(/\n/g,' ')+'"';
+  const lines = ROWS.map(r=>{const h=r.historia||{},d=r.datos||{};return [
+    r.created_at, r.nombre, r.edad, r.contacto, d.ocupacion, d.convivencia, d.derivacion, h.gravedad_0a10,
+    r.phq9?.total, r.phq9?.severidad, r.phq9?.item9, r.phq9?.impacto_funcional,
+    r.gad7?.total, r.gad7?.severidad,
+    r.dass21?.depresion?.puntaje, r.dass21?.depresion?.severidad,
+    r.dass21?.ansiedad?.puntaje, r.dass21?.ansiedad?.severidad,
+    r.dass21?.estres?.puntaje, r.dass21?.estres?.severidad,
+    r.alerta_riesgo?'SI':'no', r.duracion_min, h.motivo].map(cell).join(';');});
+  download('evaluaciones.csv', '﻿'+cols.join(';')+'\n'+lines.join('\n'), 'text/csv');
+});
+
+/* ── arranque ── */
+if(token()){ view('list'); load(); } else view('login');
+</script>
+</body>
+</html>
