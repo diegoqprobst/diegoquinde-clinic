@@ -124,6 +124,7 @@ svg text{font-family:var(--sans)}
 
 /* ── Publicaciones ── */
 .pub{border:1px solid var(--rule);border-left:2px solid var(--teal);background:var(--paper);padding:24px 26px}
+.pub+.pub{margin-top:14px}
 .pub .tag{font-size:10px;color:var(--teal);font-weight:600;letter-spacing:.18em;text-transform:uppercase}
 .pub h3{font-size:19px;font-weight:300;letter-spacing:-.01em;margin:10px 0;line-height:1.3}
 .pub p{font-size:14px;font-weight:400;color:var(--ink-soft);text-wrap:pretty}
@@ -262,6 +263,15 @@ footer a:hover{text-decoration:underline}
   <section id="publicaciones">
     <div class="s-label" data-en="Publications">Publicaciones</div>
     <h2 class="section" data-en="Work">Trabajos</h2>
+    <div class="pub">
+      <div class="tag" data-en="Working paper · 2026">Documento de trabajo · 2026</div>
+      <h3 data-en="Palo Alto Bench: can frontier LLMs detect symmetrical escalation and double binds, and produce valid reframes? A bilingual (Spanish/English) benchmark">Palo Alto Bench: ¿pueden los modelos de frontera detectar la escalada simétrica y el doble vínculo, y producir un reencuadre válido? Un benchmark bilingüe (español/inglés)</h3>
+      <p data-en="A bilingual benchmark measuring whether models read the interaction pattern — runaway escalation, the double bind — and not just the content of the sentences, and whether they can return a valid reframe. Design and preregistered protocol, frozen before running a single model.">Un benchmark bilingüe que mide si los modelos leen el patrón de interacción —la escalada que se descontrola, el doble vínculo— y no solo el contenido de las frases, y si pueden devolver un reencuadre válido. Diseño y protocolo preregistrado, congelado antes de correr un solo modelo.</p>
+      <div class="meta">
+        <span data-en="Data &amp; code:">Datos y código:</span> <a href="https://doi.org/10.5281/zenodo.21223038">10.5281/zenodo.21223038</a>
+        · <a href="https://github.com/diegoqprobst/pragma-bench">GitHub</a>
+      </div>
+    </div>
     <div class="pub">
       <div class="tag">Preprint · 2026</div>
       <h3>Simulating family systems with LLM agents: a corpus-grounded engine for counterfactual
