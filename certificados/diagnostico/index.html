@@ -307,10 +307,29 @@ body {
     for(var i=0;i<8;i++){ for(var j=3;j+1;j--){ var b=(hash[i]>>(j*8))&255; res+=((b<16)?0:'')+b.toString(16); } }
     return res;
   }
+  // Perfil del profesional cifrado con AES-256-GCM (clave derivada de la contraseña
+  // del candado vía PBKDF2-SHA256, 200k iteraciones). Sin la contraseña no es legible.
+  var PROFILE_ENC={"s":"sSiULn94FYNj1j/2n//wQg==","i":"7kcYWpc/+xLyzEOU","n":200000,"d":"lpdL7Pjoh6Ho3SuvwsHi2KZUPQzcyeWNQH4/WuEm4x5PMbUcS+/gQyfMGm7nWpe+XNG5tLNie3jTN2S8szjf3B9/OjOys6IzFa6b4hlN0HIHUlx23Kscn6tTCn/O19km74kOODMKasJxgFiN7ClDGk+ehnhG1T5xM/9piXnM5BJ7LjzqGvN1lABPUte4o4Tx/rOnvv4Hq49Ml6ujKmsZQMLEIUR8v9X9ZTxQDUzEIsvcO6ItK8IlpZ82va7bp3aGzoVfeXGsaqczo/Z4maaDWN9HHHLcUu4JiGJE8DjhItXVCF+Ck71CdQkeSV2hqfNGDGlc+KLCtHv1pdCr1fN9/QGtmz3T0ukuFBAc"};
+  function descifrarPerfil(pass){
+    if(!(window.crypto&&crypto.subtle)) return;
+    var dec=function(b64){ return Uint8Array.from(atob(b64),function(c){return c.charCodeAt(0);}); };
+    crypto.subtle.importKey('raw',new TextEncoder().encode(pass),'PBKDF2',false,['deriveKey'])
+      .then(function(km){ return crypto.subtle.deriveKey({name:'PBKDF2',salt:dec(PROFILE_ENC.s),iterations:PROFILE_ENC.n,hash:'SHA-256'},km,{name:'AES-GCM',length:256},false,['decrypt']); })
+      .then(function(key){ return crypto.subtle.decrypt({name:'AES-GCM',iv:dec(PROFILE_ENC.i)},key,dec(PROFILE_ENC.d)); })
+      .then(function(pt){
+        var prof=JSON.parse(new TextDecoder().decode(pt));
+        Object.keys(prof).forEach(function(id){
+          var el=document.getElementById(id);
+          if(el&&(!el.value||el.value===el.defaultValue)) el.value=prof[id];
+        });
+        if(typeof window.render==='function') window.render();
+      })
+      .catch(function(){ /* sin perfil precargado */ });
+  }
   var form=document.getElementById('gate-form'),inp=document.getElementById('gate-pass'),err=document.getElementById('gate-err');
   form.addEventListener('submit',function(e){
     e.preventDefault();
-    if(sha256(inp.value)===HASH){ sessionStorage.setItem(KEY,'1'); gate.remove(); }
+    if(sha256(inp.value)===HASH){ var pass=inp.value; sessionStorage.setItem(KEY,'1'); gate.remove(); descifrarPerfil(pass); }
     else { err.style.display='block'; inp.value=''; inp.focus(); }
   });
   inp.focus();

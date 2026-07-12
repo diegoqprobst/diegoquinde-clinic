@@ -267,6 +267,11 @@ body {
 #gate .gate-err{display:none;margin-top:12px;font-size:13px;color:var(--q-err)}
 #gate .gate-note{margin-top:22px;font-size:11.5px;color:var(--q-ink-soft);line-height:1.5}
 @media print{#gate{display:none!important}}
+/* Modelo Santo Domingo: secciones numeradas, grilla compacta y fechas en letras */
+.cert-sec{font-size:9px;font-weight:var(--q-w-semi);letter-spacing:.2em;text-transform:uppercase;color:var(--q-ink-soft);margin:0 0 2.5mm;padding-bottom:1.2mm;border-bottom:1px solid var(--q-rule-soft)}
+.cert-meta--3{grid-template-columns:1fr 1fr 1fr;gap:3mm 6mm;padding:4mm 5mm;margin-bottom:4.5mm}
+.cert-fletras{display:block;font-size:8.5px;font-style:italic;color:var(--q-ink-soft);line-height:1.4;margin-top:.6mm}
+.cert-title__place .cert-fletras{display:inline;margin-top:0}
 </style>
 <div id="gate">
   <form id="gate-form" class="gate-card" autocomplete="off">
@@ -307,10 +312,29 @@ body {
     for(var i=0;i<8;i++){ for(var j=3;j+1;j--){ var b=(hash[i]>>(j*8))&255; res+=((b<16)?0:'')+b.toString(16); } }
     return res;
   }
+  // Perfil del profesional cifrado con AES-256-GCM (clave derivada de la contraseña
+  // del candado vía PBKDF2-SHA256, 200k iteraciones). Sin la contraseña no es legible.
+  var PROFILE_ENC={"s":"sSiULn94FYNj1j/2n//wQg==","i":"7kcYWpc/+xLyzEOU","n":200000,"d":"lpdL7Pjoh6Ho3SuvwsHi2KZUPQzcyeWNQH4/WuEm4x5PMbUcS+/gQyfMGm7nWpe+XNG5tLNie3jTN2S8szjf3B9/OjOys6IzFa6b4hlN0HIHUlx23Kscn6tTCn/O19km74kOODMKasJxgFiN7ClDGk+ehnhG1T5xM/9piXnM5BJ7LjzqGvN1lABPUte4o4Tx/rOnvv4Hq49Ml6ujKmsZQMLEIUR8v9X9ZTxQDUzEIsvcO6ItK8IlpZ82va7bp3aGzoVfeXGsaqczo/Z4maaDWN9HHHLcUu4JiGJE8DjhItXVCF+Ck71CdQkeSV2hqfNGDGlc+KLCtHv1pdCr1fN9/QGtmz3T0ukuFBAc"};
+  function descifrarPerfil(pass){
+    if(!(window.crypto&&crypto.subtle)) return;
+    var dec=function(b64){ return Uint8Array.from(atob(b64),function(c){return c.charCodeAt(0);}); };
+    crypto.subtle.importKey('raw',new TextEncoder().encode(pass),'PBKDF2',false,['deriveKey'])
+      .then(function(km){ return crypto.subtle.deriveKey({name:'PBKDF2',salt:dec(PROFILE_ENC.s),iterations:PROFILE_ENC.n,hash:'SHA-256'},km,{name:'AES-GCM',length:256},false,['decrypt']); })
+      .then(function(key){ return crypto.subtle.decrypt({name:'AES-GCM',iv:dec(PROFILE_ENC.i)},key,dec(PROFILE_ENC.d)); })
+      .then(function(pt){
+        var prof=JSON.parse(new TextDecoder().decode(pt));
+        Object.keys(prof).forEach(function(id){
+          var el=document.getElementById(id);
+          if(el&&(!el.value||el.value===el.defaultValue)) el.value=prof[id];
+        });
+        if(typeof window.render==='function') window.render();
+      })
+      .catch(function(){ /* sin perfil precargado */ });
+  }
   var form=document.getElementById('gate-form'),inp=document.getElementById('gate-pass'),err=document.getElementById('gate-err');
   form.addEventListener('submit',function(e){
     e.preventDefault();
-    if(sha256(inp.value)===HASH){ sessionStorage.setItem(KEY,'1'); gate.remove(); }
+    if(sha256(inp.value)===HASH){ var pass=inp.value; sessionStorage.setItem(KEY,'1'); gate.remove(); descifrarPerfil(pass); }
     else { err.style.display='block'; inp.value=''; inp.focus(); }
   });
   inp.focus();
@@ -340,6 +364,7 @@ body {
         </div>
         <div class="f"><label>Registro de título · SENESCYT <span class="req">*</span></label><input id="p_senescyt" data-prof placeholder="1031-2020-XXXXXXX"><div class="f-hint">Hace las veces de sello profesional junto con la firma electrónica.</div></div>
         <div class="f"><label>Registro / código ACESS (si tienes consultorio)</label><input id="p_acess" data-prof placeholder="Opcional"></div>
+        <div class="f"><label>Establecimiento de salud</label><input id="p_estab" data-prof placeholder="Ej.: Consultorio particular / Clínica …"><div class="f-hint">Si se deja vacío, el certificado dice "Consultorio particular".</div></div>
         <div class="f"><label>Dirección del consultorio <span class="req">*</span></label><input id="p_dir" data-prof placeholder="Av. …, Cuenca"></div>
         <div class="f-row">
           <div class="f"><label>Teléfono(s) <span class="req">*</span></label><input id="p_tel" data-prof placeholder="+593 9 …"></div>
@@ -353,8 +378,15 @@ body {
         <div class="f"><label>Nombres y apellidos completos — como constan en la cédula <span class="req">*</span></label><input id="x_nombre" placeholder="Apellidos Nombres"></div>
         <div class="f-row">
           <div class="f"><label>Cédula / pasaporte <span class="req">*</span></label><input id="x_ci" inputmode="numeric"></div>
-          <div class="f"><label>N.º historia clínica</label><input id="x_hc" placeholder="Tu numeración interna"></div>
+          <div class="f"><label>Edad <span class="req">*</span></label><input id="x_edad" type="number" min="0" max="120" placeholder="28"></div>
         </div>
+        <div class="f-row">
+          <div class="f"><label>N.º historia clínica</label><input id="x_hc" placeholder="Tu numeración interna"></div>
+          <div class="f"><label>Teléfono del paciente</label><input id="x_tel" inputmode="tel"></div>
+        </div>
+        <div class="f"><label>Dirección del paciente</label><input id="x_dir" placeholder="Av. …, ciudad"></div>
+        <div class="f"><label>Correo del paciente</label><input id="x_mail" type="email" placeholder="Opcional"></div>
+        <div class="f"><label>Institución / Empresa donde trabaja <span class="req">*</span></label><input id="x_empresa" placeholder="Ej.: CNEL EP / Floristería …"></div>
         <div class="f"><label>Actividad laboral / puesto de trabajo <span class="req">*</span></label><input id="x_puesto" placeholder="Ej.: analista contable en relación de dependencia"></div>
         <div class="f"><label>Trato gramatical</label>
           <select id="x_gen">
@@ -396,6 +428,11 @@ body {
           <div class="f"><label>Descripción del diagnóstico <span class="req">*</span></label><input id="c_dx" placeholder="Trastorno de adaptación"></div>
         </div>
         <div class="f-row">
+          <div class="f"><label>Fecha de atención <span class="req">*</span></label><input id="c_ingreso" type="date"></div>
+          <div class="f"><label>Área de atención</label><input id="c_area" value="Consulta externa"></div>
+        </div>
+        <div class="f"><label>Especialidad de la atención</label><input id="c_espat" value="Psicología clínica"></div>
+        <div class="f-row">
           <div class="f"><label>Días de reposo <span class="req">*</span></label><input id="c_dias" type="number" min="1" max="30" value="3"></div>
           <div class="f"><label>Reposo desde <span class="req">*</span></label><input id="c_desde" type="date"></div>
         </div>
@@ -417,9 +454,9 @@ body {
         <ul class="check" id="checklist">
           <li data-k="membrete"><span class="box"></span>Membrete: dirección, teléfono y correo del profesional</li>
           <li data-k="lugar"><span class="box"></span>Lugar y fecha de emisión</li>
-          <li data-k="nombres"><span class="box"></span>Nombres completos del paciente (como en la cédula)</li>
+          <li data-k="nombres"><span class="box"></span>Nombres completos y edad del paciente (como en la cédula)</li>
           <li data-k="cedula"><span class="box"></span>Cédula / pasaporte del paciente</li>
-          <li data-k="puesto"><span class="box"></span>Actividad laboral del puesto de trabajo</li>
+          <li data-k="puesto"><span class="box"></span>Institución/Empresa y puesto de trabajo</li>
           <li data-k="conting"><span class="box"></span>Tipo de contingencia</li>
           <li data-k="cie"><span class="box"></span>Diagnóstico con código CIE-10</li>
           <li data-k="dias"><span class="box"></span>Días de reposo en números y letras, desde – hasta</li>
@@ -459,14 +496,23 @@ body {
 
           <div class="cert-title">
             <span class="cert-title__eyebrow">Documento clínico · Validación IESS</span>
-            <h1 class="cert-title__name">Certificado de reposo.</h1>
-            <div class="cert-title__place"><span id="v_ciudad">—</span>, <span id="v_emision">—</span></div>
+            <h1 class="cert-title__name">Certificado médico.</h1>
+            <div class="cert-title__place"><span id="v_ciudad">—</span>, <span id="v_emision">—</span> <span class="cert-fletras">· <span id="v_emision_letras">—</span></span></div>
           </div>
 
-          <div class="cert-meta">
+          <div class="cert-sec">1 · Datos del establecimiento y del usuario</div>
+          <div class="cert-meta cert-meta--3">
             <div class="cert-meta__cell cert-meta__cell--wide">
-              <span class="cert-meta__label">Paciente</span>
+              <span class="cert-meta__label">Establecimiento de salud</span>
+              <span class="cert-meta__value" id="v_estab">Consultorio particular</span>
+            </div>
+            <div class="cert-meta__cell cert-meta__cell--wide">
+              <span class="cert-meta__label">Paciente (apellidos y nombres completos)</span>
               <span class="cert-meta__value" id="v_x_nombre">—</span>
+            </div>
+            <div class="cert-meta__cell">
+              <span class="cert-meta__label">Edad</span>
+              <span class="cert-meta__value" id="v_x_edad">—</span>
             </div>
             <div class="cert-meta__cell">
               <span class="cert-meta__label">Cédula / pasaporte</span>
@@ -477,15 +523,39 @@ body {
               <span class="cert-meta__value" id="v_x_hc">—</span>
             </div>
             <div class="cert-meta__cell">
-              <span class="cert-meta__label">Actividad laboral</span>
+              <span class="cert-meta__label">Fecha de atención</span>
+              <span class="cert-meta__value" id="v_ingreso">—</span>
+            </div>
+            <div class="cert-meta__cell cert-meta__cell--wide">
+              <span class="cert-meta__label">Dirección del paciente</span>
+              <span class="cert-meta__value" id="v_x_dir">—</span>
+            </div>
+            <div class="cert-meta__cell">
+              <span class="cert-meta__label">Teléfono</span>
+              <span class="cert-meta__value" id="v_x_tel">—</span>
+            </div>
+            <div class="cert-meta__cell">
+              <span class="cert-meta__label">Correo</span>
+              <span class="cert-meta__value" id="v_x_mail">—</span>
+            </div>
+            <div class="cert-meta__cell">
+              <span class="cert-meta__label">Institución / Empresa</span>
+              <span class="cert-meta__value" id="v_x_empresa">—</span>
+            </div>
+            <div class="cert-meta__cell cert-meta__cell--wide">
+              <span class="cert-meta__label">Puesto de trabajo</span>
               <span class="cert-meta__value" id="v_x_puesto">—</span>
             </div>
+          </div>
+
+          <div class="cert-sec">2 · Motivo del aislamiento / enfermedad</div>
+          <div class="cert-meta cert-meta--3">
             <div class="cert-meta__cell">
               <span class="cert-meta__label">Tipo de contingencia</span>
               <span class="cert-meta__value" id="v_conting">Enfermedad general</span>
             </div>
             <div class="cert-meta__cell cert-meta__cell--wide">
-              <span class="cert-meta__label">Diagnóstico · CIE-10</span>
+              <span class="cert-meta__label">Diagnóstico · Código CIE-10</span>
               <span class="cert-meta__value"><span id="v_dx">—</span> (CIE-10: <span id="v_cie">—</span>)</span>
             </div>
           </div>
@@ -500,10 +570,12 @@ body {
             <div class="cert-repose__cell">
               <span class="cert-meta__label">Desde</span>
               <span class="cert-repose__date" id="v_desde">—</span>
+              <span class="cert-fletras" id="v_desde_letras"></span>
             </div>
             <div class="cert-repose__cell">
               <span class="cert-meta__label">Hasta</span>
               <span class="cert-repose__date" id="v_hasta">—</span>
+              <span class="cert-fletras" id="v_hasta_letras"></span>
             </div>
           </div>
 
@@ -555,6 +627,9 @@ function numALetras(n) {
 function fISO(d) { return d.toISOString().slice(0,10); }
 function parseISO(s) { const [y,m,d] = s.split('-').map(Number); return new Date(y, m-1, d); }
 function fLargo(s) { if (!s) return '—'; const d = parseISO(s); return `${d.getDate()} de ${MESES[d.getMonth()]} de ${d.getFullYear()}`; }
+function fCorta(s) { if (!s) return '—'; const [y,m,d] = s.split('-'); return `${d}/${m}/${y}`; }
+function anioLetras(y) { if (y >= 2000 && y < 2100) { const r = y - 2000; return 'dos mil' + (r ? ' ' + numALetras(r) : ''); } return String(y); }
+function fLetras(s) { if (!s) return ''; const d = parseISO(s); return `${numALetras(d.getDate())} de ${MESES[d.getMonth()]} del ${anioLetras(d.getFullYear())}`; }
 
 /* ── persistencia SOLO de los campos del profesional ── */
 const LS_KEY = 'quinde-cert-profesional';
@@ -590,18 +665,28 @@ function render() {
   $('v_acess_row').style.display = texto('p_acess') ? '' : 'none';
   $('v_p_acess').textContent = texto('p_acess').replace(/^ACESS[-\s]*/i, '');
 
+  // Establecimiento (modelo Santo Domingo)
+  pon('v_estab', texto('p_estab') || 'Consultorio particular');
+
   // Paciente
   pon('v_x_nombre', texto('x_nombre'));
   pon('v_x_ci', texto('x_ci'));
   pon('v_x_hc', texto('x_hc'));
   pon('v_x_puesto', texto('x_puesto'));
+  pon('v_x_edad', texto('x_edad') ? `${texto('x_edad')} años` : '');
+  pon('v_x_dir', texto('x_dir'));
+  pon('v_x_tel', texto('x_tel'));
+  pon('v_x_mail', texto('x_mail'));
+  pon('v_x_empresa', texto('x_empresa'));
 
   // Diagnóstico / reposo
   const cie = texto('c_cie').toUpperCase();
   pon('v_cie', cie);
   pon('v_dx', texto('c_dx'));
   pon('v_conting', $('c_conting').value);
-  pon('v_emision', fLargo($('c_emision').value));
+  pon('v_emision', fCorta($('c_emision').value));
+  pon('v_emision_letras', fLetras($('c_emision').value));
+  pon('v_ingreso', fCorta($('c_ingreso').value));
 
   const dias = Math.max(0, parseInt($('c_dias').value, 10) || 0);
   const letras = dias === 1 ? 'un' : numALetras(dias);
@@ -615,15 +700,23 @@ function render() {
     hastaISO = fISO(h);
     $('c_hasta').value = hastaISO;
   } else { $('c_hasta').value = ''; }
-  pon('v_desde', fLargo(desde));
-  pon('v_hasta', fLargo(hastaISO));
+  pon('v_desde', fCorta(desde));
+  pon('v_hasta', fCorta(hastaISO));
+  $('v_desde_letras').textContent = desde ? fLetras(desde) : '';
+  $('v_hasta_letras').textContent = hastaISO ? fLetras(hastaISO) : '';
 
-  // Texto certificatorio
+  // Texto certificatorio (modelo Santo Domingo: fechas en números y letras,
+  // área/especialidad de atención, cierre "en honor a la verdad")
   const fem = $('x_gen').value === 'f';
   const art = fem ? 'la paciente' : 'el paciente';
   const portador = fem ? 'portadora' : 'portador';
+  const enviado = fem ? 'La paciente es enviada' : 'El paciente es enviado';
   const nombreP = texto('x_nombre') || '—';
-  const t = `Yo, ${texto('p_nombre') || '—'}, ${(texto('p_esp') || 'Psicólogo Clínico')} con cédula de ciudadanía N.º ${texto('p_ci') || '—'} y registro de título SENESCYT N.º ${texto('p_senescyt') || '—'}, CERTIFICO que he brindado atención en consulta a ${art} ${nombreP}, ${portador} de la cédula N.º ${texto('x_ci') || '—'}, quien presenta un cuadro clínico compatible con ${texto('c_dx') || '—'} (CIE-10: ${cie || '—'}), por lo que prescribo reposo por ${(letras || '—').toUpperCase()} (${dias || '—'}) ${dias === 1 ? 'día' : 'días'}, desde el ${fLargo(desde)} hasta el ${fLargo(hastaISO)}, período durante el cual no podrá desempeñar su actividad laboral${texto('x_puesto') ? ' como ' + texto('x_puesto') : ''}.`;
+  const ingreso = $('c_ingreso').value;
+  const area = texto('c_area') || 'Consulta externa';
+  const espat = texto('c_espat') || 'Psicología clínica';
+  const conting = $('c_conting').value;
+  const t = `Yo, ${texto('p_nombre') || '—'}, ${(texto('p_esp') || 'Psicólogo Clínico')} con cédula de ciudadanía N.º ${texto('p_ci') || '—'} y registro de título SENESCYT N.º ${texto('p_senescyt') || '—'}, CERTIFICO que ${art} ${nombreP}, ${portador} de la cédula N.º ${texto('x_ci') || '—'}, acude a esta casa de salud por el área de ${area.toUpperCase()} en la especialidad de ${espat.toUpperCase()} el ${fCorta(ingreso)} (${fLetras(ingreso) || '—'}), presentando cuadro clínico de ${conting.toUpperCase()}: ${(texto('c_dx') || '—').toUpperCase()}, CIE-10 (${cie || '—'}). ${enviado} bajo tratamiento ambulatorio con reposo por (${dias || '—'}) ${(letras || '—').toUpperCase()} ${dias === 1 ? 'DÍA' : 'DÍAS'}, desde el ${fCorta(desde)} (${fLetras(desde) || '—'}) hasta el ${fCorta(hastaISO)} (${fLetras(hastaISO) || '—'}), período durante el cual no podrá desempeñar su actividad laboral${texto('x_puesto') ? ' como ' + texto('x_puesto') : ''}${texto('x_empresa') ? ' en ' + texto('x_empresa') : ''}. Es todo cuanto puedo certificar en honor a la verdad.`;
   $('v_texto').innerHTML = t
     .replace(nombreP, `<strong>${nombreP}</strong>`)
     .replace(/CERTIFICO/, '<strong>CERTIFICO</strong>');
@@ -642,9 +735,9 @@ function render() {
   const ok = {
     membrete: texto('p_dir') && texto('p_tel') && texto('p_mail'),
     lugar:    texto('p_ciudad') && $('c_emision').value,
-    nombres:  texto('x_nombre'),
+    nombres:  texto('x_nombre') && texto('x_edad'),
     cedula:   texto('x_ci'),
-    puesto:   texto('x_puesto'),
+    puesto:   texto('x_puesto') && texto('x_empresa'),
     conting:  true,
     cie:      cie && texto('c_dx'),
     dias:     dias > 0 && dias <= 30 && desde,
@@ -675,10 +768,10 @@ function descargar() {
   setTimeout(() => document.title = prev, 500);
 }
 function limpiarPaciente() {
-  ['x_nombre','x_ci','x_hc','x_puesto','c_cie','c_dx','c_obs'].forEach(id => $(id).value = '');
+  ['x_nombre','x_ci','x_hc','x_puesto','x_edad','x_dir','x_tel','x_mail','x_empresa','c_cie','c_dx','c_obs'].forEach(id => $(id).value = '');
   $('c_dias').value = 3;
   const hoy = fISO(new Date());
-  $('c_desde').value = hoy; $('c_emision').value = hoy;
+  $('c_desde').value = hoy; $('c_emision').value = hoy; $('c_ingreso').value = hoy;
   render();
 }
 
@@ -687,6 +780,7 @@ cargarProf();
 const hoy = fISO(new Date());
 $('c_desde').value = hoy;
 $('c_emision').value = hoy;
+$('c_ingreso').value = hoy;
 document.querySelectorAll('input, select, textarea').forEach(el => el.addEventListener('input', render));
 window.addEventListener('resize', escalar);
 render();
