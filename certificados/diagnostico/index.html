@@ -267,6 +267,11 @@ body {
 #gate .gate-err{display:none;margin-top:12px;font-size:13px;color:var(--q-err)}
 #gate .gate-note{margin-top:22px;font-size:11.5px;color:var(--q-ink-soft);line-height:1.5}
 @media print{#gate{display:none!important}}
+/* Modelo Santo Domingo: secciones numeradas, grilla compacta y fechas en letras */
+.cert-sec{font-size:9px;font-weight:var(--q-w-semi);letter-spacing:.2em;text-transform:uppercase;color:var(--q-ink-soft);margin:0 0 2.5mm;padding-bottom:1.2mm;border-bottom:1px solid var(--q-rule-soft)}
+.cert-meta--3{grid-template-columns:1fr 1fr 1fr;gap:3mm 6mm;padding:4mm 5mm;margin-bottom:4.5mm}
+.cert-fletras{display:block;font-size:8.5px;font-style:italic;color:var(--q-ink-soft);line-height:1.4;margin-top:.6mm}
+.cert-title__place .cert-fletras{display:inline;margin-top:0}
 </style>
 <div id="gate">
   <form id="gate-form" class="gate-card" autocomplete="off">
@@ -359,6 +364,7 @@ body {
         </div>
         <div class="f"><label>Registro de título · SENESCYT <span class="req">*</span></label><input id="p_senescyt" data-prof placeholder="1031-2020-XXXXXXX"><div class="f-hint">Hace las veces de sello profesional junto con la firma electrónica.</div></div>
         <div class="f"><label>Registro / código ACESS (si tienes consultorio)</label><input id="p_acess" data-prof placeholder="Opcional"></div>
+        <div class="f"><label>Establecimiento de salud</label><input id="p_estab" data-prof placeholder="Ej.: Consultorio particular / Clínica …"><div class="f-hint">Si se deja vacío, el certificado dice "Consultorio particular".</div></div>
         <div class="f"><label>Dirección del consultorio <span class="req">*</span></label><input id="p_dir" data-prof placeholder="Av. …, Cuenca"></div>
         <div class="f-row">
           <div class="f"><label>Teléfono(s) <span class="req">*</span></label><input id="p_tel" data-prof placeholder="+593 9 …"></div>
@@ -372,8 +378,14 @@ body {
         <div class="f"><label>Nombres y apellidos completos — como constan en la cédula <span class="req">*</span></label><input id="x_nombre" placeholder="Apellidos Nombres"></div>
         <div class="f-row">
           <div class="f"><label>Cédula / pasaporte <span class="req">*</span></label><input id="x_ci" inputmode="numeric"></div>
-          <div class="f"><label>N.º historia clínica</label><input id="x_hc" placeholder="Tu numeración interna"></div>
+          <div class="f"><label>Edad <span class="req">*</span></label><input id="x_edad" type="number" min="0" max="120" placeholder="28"></div>
         </div>
+        <div class="f-row">
+          <div class="f"><label>N.º historia clínica</label><input id="x_hc" placeholder="Tu numeración interna"></div>
+          <div class="f"><label>Teléfono del paciente</label><input id="x_tel" inputmode="tel"></div>
+        </div>
+        <div class="f"><label>Dirección del paciente</label><input id="x_dir" placeholder="Av. …, ciudad"></div>
+        <div class="f"><label>Correo del paciente</label><input id="x_mail" type="email" placeholder="Opcional"></div>
         <div class="f"><label>Finalidad del certificado (a petición del interesado)</label><input id="c_fin" placeholder="Ej.: reingreso universitario / trámite académico"><div class="f-hint">Opcional. Si se llena, aparece en el texto certificatorio.</div></div>
         <div class="f"><label>Trato gramatical</label>
           <select id="x_gen">
@@ -407,7 +419,11 @@ body {
           <div class="f"><label>Descripción del diagnóstico <span class="req">*</span></label><input id="c_dx" placeholder="Distimia (trastorno depresivo persistente)"></div>
         </div>
         <div class="f-row">
-          <div class="f"><label>Fecha de evaluación</label><input id="c_feval" type="date"><div class="f-hint">Opcional. Fecha (o inicio) del proceso de evaluación.</div></div>
+          <div class="f"><label>Área de atención</label><input id="c_area" value="Consulta externa"></div>
+          <div class="f"><label>Especialidad de la atención</label><input id="c_espat" value="Psicología clínica"></div>
+        </div>
+        <div class="f-row">
+          <div class="f"><label>Fecha de atención / evaluación <span class="req">*</span></label><input id="c_feval" type="date"></div>
           <div class="f"><label>Fecha de emisión <span class="req">*</span></label><input id="c_emision" type="date"></div>
         </div>
         <div class="f"><label>Sustento clínico / observaciones</label><textarea id="c_obs" placeholder="Sintomatología, instrumentos aplicados y antecedentes relevantes que sustentan el diagnóstico."></textarea><div class="f-hint">Aparece como bloque "Sustento clínico" en el certificado. Redáctalo desde la historia clínica.</div></div>
@@ -418,7 +434,7 @@ body {
         <ul class="check" id="checklist">
           <li data-k="membrete"><span class="box"></span>Membrete: dirección, teléfono y correo del profesional</li>
           <li data-k="lugar"><span class="box"></span>Lugar y fecha de emisión</li>
-          <li data-k="nombres"><span class="box"></span>Nombres completos del paciente (como en la cédula)</li>
+          <li data-k="nombres"><span class="box"></span>Nombres completos y edad del paciente (como en la cédula)</li>
           <li data-k="cedula"><span class="box"></span>Cédula / pasaporte del paciente</li>
           <li data-k="cie"><span class="box"></span>Diagnóstico con código CIE-10</li>
           <li data-k="emisor"><span class="box"></span>Nombre, especialidad y registro del profesional emisor</li>
@@ -457,14 +473,23 @@ body {
 
           <div class="cert-title">
             <span class="cert-title__eyebrow">Documento clínico</span>
-            <h1 class="cert-title__name">Certificado de diagnóstico.</h1>
-            <div class="cert-title__place"><span id="v_ciudad">—</span>, <span id="v_emision">—</span></div>
+            <h1 class="cert-title__name">Certificado psicológico.</h1>
+            <div class="cert-title__place"><span id="v_ciudad">—</span>, <span id="v_emision">—</span> <span class="cert-fletras">· <span id="v_emision_letras">—</span></span></div>
           </div>
 
-          <div class="cert-meta">
+          <div class="cert-sec">1 · Datos del establecimiento y del usuario</div>
+          <div class="cert-meta cert-meta--3">
             <div class="cert-meta__cell cert-meta__cell--wide">
-              <span class="cert-meta__label">Paciente</span>
+              <span class="cert-meta__label">Establecimiento de salud</span>
+              <span class="cert-meta__value" id="v_estab">Consultorio particular</span>
+            </div>
+            <div class="cert-meta__cell cert-meta__cell--wide">
+              <span class="cert-meta__label">Paciente (apellidos y nombres completos)</span>
               <span class="cert-meta__value" id="v_x_nombre">—</span>
+            </div>
+            <div class="cert-meta__cell">
+              <span class="cert-meta__label">Edad</span>
+              <span class="cert-meta__value" id="v_x_edad">—</span>
             </div>
             <div class="cert-meta__cell">
               <span class="cert-meta__label">Cédula / pasaporte</span>
@@ -474,12 +499,32 @@ body {
               <span class="cert-meta__label">Historia clínica</span>
               <span class="cert-meta__value" id="v_x_hc">—</span>
             </div>
-            <div class="cert-meta__cell" id="v_feval_cell">
-              <span class="cert-meta__label">Fecha de evaluación</span>
+            <div class="cert-meta__cell">
+              <span class="cert-meta__label">Fecha de atención</span>
               <span class="cert-meta__value" id="v_feval">—</span>
             </div>
+            <div class="cert-meta__cell">
+              <span class="cert-meta__label">Teléfono</span>
+              <span class="cert-meta__value" id="v_x_tel">—</span>
+            </div>
+            <div class="cert-meta__cell">
+              <span class="cert-meta__label">Correo</span>
+              <span class="cert-meta__value" id="v_x_mail">—</span>
+            </div>
             <div class="cert-meta__cell cert-meta__cell--wide">
-              <span class="cert-meta__label">Diagnóstico · CIE-10</span>
+              <span class="cert-meta__label">Dirección del paciente</span>
+              <span class="cert-meta__value" id="v_x_dir">—</span>
+            </div>
+            <div class="cert-meta__cell cert-meta__cell--wide" id="v_fin_cell">
+              <span class="cert-meta__label">Finalidad del certificado</span>
+              <span class="cert-meta__value" id="v_fin">—</span>
+            </div>
+          </div>
+
+          <div class="cert-sec">2 · Diagnóstico</div>
+          <div class="cert-meta cert-meta--3">
+            <div class="cert-meta__cell cert-meta__cell--wide">
+              <span class="cert-meta__label">Diagnóstico · Código CIE-10</span>
               <span class="cert-meta__value"><span id="v_dx">—</span> (CIE-10: <span id="v_cie">—</span>)</span>
             </div>
           </div>
@@ -534,6 +579,9 @@ function numALetras(n) {
 function fISO(d) { return d.toISOString().slice(0,10); }
 function parseISO(s) { const [y,m,d] = s.split('-').map(Number); return new Date(y, m-1, d); }
 function fLargo(s) { if (!s) return '—'; const d = parseISO(s); return `${d.getDate()} de ${MESES[d.getMonth()]} de ${d.getFullYear()}`; }
+function fCorta(s) { if (!s) return '—'; const [y,m,d] = s.split('-'); return `${d}/${m}/${y}`; }
+function anioLetras(y) { if (y >= 2000 && y < 2100) { const r = y - 2000; return 'dos mil' + (r ? ' ' + numALetras(r) : ''); } return String(y); }
+function fLetras(s) { if (!s) return ''; const d = parseISO(s); return `${numALetras(d.getDate())} de ${MESES[d.getMonth()]} del ${anioLetras(d.getFullYear())}`; }
 
 /* ── persistencia SOLO de los campos del profesional ── */
 const LS_KEY = 'quinde-cert-profesional';
@@ -569,29 +617,39 @@ function render() {
   $('v_acess_row').style.display = texto('p_acess') ? '' : 'none';
   $('v_p_acess').textContent = texto('p_acess').replace(/^ACESS[-\s]*/i, '');
 
+  // Establecimiento (modelo Santo Domingo)
+  pon('v_estab', texto('p_estab') || 'Consultorio particular');
+
   // Paciente
   pon('v_x_nombre', texto('x_nombre'));
   pon('v_x_ci', texto('x_ci'));
   pon('v_x_hc', texto('x_hc'));
+  pon('v_x_edad', texto('x_edad') ? `${texto('x_edad')} años` : '');
+  pon('v_x_dir', texto('x_dir'));
+  pon('v_x_tel', texto('x_tel'));
+  pon('v_x_mail', texto('x_mail'));
 
   // Diagnóstico
   const cie = texto('c_cie').toUpperCase();
   pon('v_cie', cie);
   pon('v_dx', texto('c_dx'));
-  pon('v_emision', fLargo($('c_emision').value));
+  pon('v_emision', fCorta($('c_emision').value));
+  pon('v_emision_letras', fLetras($('c_emision').value));
   const feval = $('c_feval').value;
-  pon('v_feval', fLargo(feval));
-  $('v_feval_cell').style.display = feval ? '' : 'none';
+  pon('v_feval', fCorta(feval));
 
-  // Texto certificatorio
+  // Texto certificatorio (modelo Santo Domingo)
   const fem = $('x_gen').value === 'f';
   const art = fem ? 'la paciente' : 'el paciente';
   const portador = fem ? 'portadora' : 'portador';
-  const evaluado = fem ? 'evaluada' : 'evaluado';
   const interesado = fem ? 'de la interesada' : 'del interesado';
   const nombreP = texto('x_nombre') || '—';
   const fin = texto('c_fin');
-  const t = `Yo, ${texto('p_nombre') || '—'}, ${(texto('p_esp') || 'Psicólogo Clínico')} con cédula de ciudadanía N.º ${texto('p_ci') || '—'} y registro de título SENESCYT N.º ${texto('p_senescyt') || '—'}, CERTIFICO que ${art} ${nombreP}, ${portador} de la cédula N.º ${texto('x_ci') || '—'}, ha sido ${evaluado} clínicamente en consulta psicológica, estableciéndose el diagnóstico de ${texto('c_dx') || '—'} (CIE-10: ${cie || '—'}). El presente certificado se emite a petición ${interesado}${fin ? ' para ' + fin : ''}, para los fines que estime pertinentes.`;
+  const area = texto('c_area') || 'Consulta externa';
+  const espat = texto('c_espat') || 'Psicología clínica';
+  pon('v_fin', fin);
+  $('v_fin_cell').style.display = fin ? '' : 'none';
+  const t = `Yo, ${texto('p_nombre') || '—'}, ${(texto('p_esp') || 'Psicólogo Clínico')} con cédula de ciudadanía N.º ${texto('p_ci') || '—'} y registro de título SENESCYT N.º ${texto('p_senescyt') || '—'}, CERTIFICO que ${art} ${nombreP}, ${portador} de la cédula N.º ${texto('x_ci') || '—'}, acude a esta casa de salud por el área de ${area.toUpperCase()} en la especialidad de ${espat.toUpperCase()} el ${fCorta(feval)} (${fLetras(feval) || '—'}), donde ha sido ${fem ? 'evaluada' : 'evaluado'} clínicamente, estableciéndose el diagnóstico de ${(texto('c_dx') || '—').toUpperCase()}, CIE-10 (${cie || '—'}). El presente certificado se emite a petición ${interesado}${fin ? ' para ' + fin : ''}, para los fines que estime pertinentes. Es todo cuanto puedo certificar en honor a la verdad.`;
   $('v_texto').innerHTML = t
     .replace(nombreP, `<strong>${nombreP}</strong>`)
     .replace(/CERTIFICO/, '<strong>CERTIFICO</strong>');
@@ -605,7 +663,7 @@ function render() {
   const ok = {
     membrete: texto('p_dir') && texto('p_tel') && texto('p_mail'),
     lugar:    texto('p_ciudad') && $('c_emision').value,
-    nombres:  texto('x_nombre'),
+    nombres:  texto('x_nombre') && texto('x_edad'),
     cedula:   texto('x_ci'),
     cie:      cie && texto('c_dx'),
     emisor:   texto('p_nombre') && texto('p_esp') && texto('p_senescyt') && texto('p_ci'),
@@ -635,9 +693,10 @@ function descargar() {
   setTimeout(() => document.title = prev, 500);
 }
 function limpiarPaciente() {
-  ['x_nombre','x_ci','x_hc','c_fin','c_cie','c_dx','c_obs','c_feval'].forEach(id => $(id).value = '');
+  ['x_nombre','x_ci','x_hc','x_edad','x_tel','x_dir','x_mail','c_fin','c_cie','c_dx','c_obs'].forEach(id => $(id).value = '');
   const hoy = fISO(new Date());
   $('c_emision').value = hoy;
+  $('c_feval').value = hoy;
   render();
 }
 
@@ -645,6 +704,7 @@ function limpiarPaciente() {
 cargarProf();
 const hoy = fISO(new Date());
 $('c_emision').value = hoy;
+$('c_feval').value = hoy;
 document.querySelectorAll('input, select, textarea').forEach(el => el.addEventListener('input', render));
 window.addEventListener('resize', escalar);
 render();
