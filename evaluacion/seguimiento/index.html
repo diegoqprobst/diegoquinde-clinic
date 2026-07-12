@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>Evaluación pre-consulta · Diego Quinde Probst</title>
+<title>Seguimiento de sesión · Diego Quinde Probst</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23141628'/%3E%3Ctext x='16' y='23' font-size='19' font-weight='300' text-anchor='middle' font-family='Georgia,serif'%3E%3Ctspan fill='%23f5f2ea'%3Eq%3C/tspan%3E%3Ctspan fill='%23eec06a' font-weight='600'%3E.%3C/tspan%3E%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Hanken+Grotesk:wght@300..700&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet">
 <style>
-/* ── UMBRELLA · evaluación pre-consulta (tokens del rediseño del portafolio) ── */
+/* ── UMBRELLA · seguimiento por sesión (tokens del rediseño del portafolio) ── */
 :root{
   --u-ink-0: oklch(13% 0.045 278);
   --u-ink-1: oklch(18.5% 0.055 278);
@@ -37,20 +37,15 @@ body{
   font-family:var(--sans);font-size:16.5px;font-weight:380;line-height:1.62;
   letter-spacing:-.005em;color:var(--u-paper);background:var(--u-ink-1);
   overflow-x:hidden;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
-/* grano: materializa la tinta */
 body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.045;
   mix-blend-mode:soft-light;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
-/* aura cálida fija */
 body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
   background:
     radial-gradient(46vw 40vw at 82% 0%, oklch(82% 0.15 75 / 0.12), transparent 60%),
     radial-gradient(60vw 52vw at 0% 100%, oklch(82% 0.15 75 / 0.05), transparent 55%)}
 body>*{position:relative;z-index:1}
 a{color:var(--u-light);text-decoration:none}
-.u-mono{font-family:var(--mono);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase}
-
-/* ── Nav ── */
 nav{position:sticky;top:0;z-index:20;height:var(--u-nav-h);display:flex;align-items:center;
   background:oklch(18.5% 0.055 278 / 0.72);backdrop-filter:blur(18px) saturate(140%);
   -webkit-backdrop-filter:blur(18px) saturate(140%);border-bottom:1px solid var(--u-hair)}
@@ -68,24 +63,19 @@ nav .wrap{display:flex;align-items:center;justify-content:space-between;width:10
 .progress{position:fixed;top:var(--u-nav-h);left:0;right:0;z-index:19;height:2px;background:transparent}
 .progress b{display:block;height:100%;background:linear-gradient(90deg,var(--u-light-deep),var(--u-light));
   width:0;transition:width .6s var(--u-ease);box-shadow:0 0 8px oklch(82% 0.15 75 / 0.5)}
-
 .wrap{max-width:var(--u-maxw);margin:0 auto;padding:0 26px}
-
-/* ── Hero ── */
 .hero{padding:76px 0 10px}
 .eyebrow{display:inline-flex;align-items:center;gap:12px;font-family:var(--mono);font-size:.66rem;
   letter-spacing:.18em;text-transform:uppercase;color:var(--u-light)}
 .eyebrow::after{content:"";width:52px;height:1px;background:var(--u-hair-2)}
 h1{font-family:var(--serif);font-optical-sizing:auto;font-weight:340;
-  font-size:clamp(2.2rem,6vw,3.6rem);line-height:1.04;letter-spacing:-.025em;
-  margin-top:22px;text-wrap:balance;max-width:16ch}
+  font-size:clamp(2.2rem,6vw,3.2rem);line-height:1.04;letter-spacing:-.025em;
+  margin-top:22px;text-wrap:balance;max-width:18ch}
 h1 em{font-style:italic;font-weight:400;color:var(--u-light)}
 .lede{font-size:1.04rem;font-weight:360;color:var(--u-paper-dim);margin-top:22px;max-width:56ch;text-wrap:pretty}
 .lede strong{color:var(--u-paper);font-weight:560}
 .who{margin-top:20px;font-family:var(--mono);font-size:.66rem;letter-spacing:.12em;
   text-transform:uppercase;color:var(--u-paper-mute)}
-
-/* ── Pasos ── */
 section.step{padding:44px 0 34px;display:none}
 section.step.on{display:block}
 .s-label{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:.62rem;
@@ -98,22 +88,18 @@ h2.section{font-family:var(--serif);font-optical-sizing:auto;font-weight:360;
   background:oklch(23% 0.062 277 / .5);padding:15px 18px;font-size:.94rem;
   color:var(--u-paper-dim);margin-bottom:22px}
 .instr b{color:var(--u-paper);font-weight:560}
-
-/* ── Campos ── */
 .field{margin-bottom:22px}
 .field label,.q label{display:block;font-size:.96rem;font-weight:540;color:var(--u-paper);margin-bottom:8px;text-wrap:pretty}
 .field .hint{font-weight:380;color:var(--u-paper-mute);font-size:.84rem;margin-top:-4px;margin-bottom:8px}
-input[type=text],input[type=email],input[type=number],textarea,select{
+input[type=text],input[type=number],textarea{
   font:inherit;font-size:.96rem;color:var(--u-paper);width:100%;padding:12px 14px;
   border:1px solid var(--u-hair);border-radius:10px;background:oklch(23% 0.062 277 / .55);
   outline:none;transition:border-color .25s var(--u-ease),background .25s var(--u-ease)}
 textarea{min-height:100px;resize:vertical}
 input::placeholder,textarea::placeholder{color:var(--u-paper-mute);opacity:.7}
-input:focus,textarea:focus,select:focus{border-color:var(--u-light);background:oklch(23% 0.062 277 / .85)}
+input:focus,textarea:focus{border-color:var(--u-light);background:oklch(23% 0.062 277 / .85)}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 @media(max-width:560px){.grid2{grid-template-columns:1fr}}
-
-/* ── Ítems de escala ── */
 .q{border:1px solid var(--u-hair);border-radius:var(--u-r);background:oklch(23% 0.062 277 / .35);
   padding:17px 19px;margin-bottom:10px;transition:border-color .3s var(--u-ease)}
 .q .num{font-family:var(--mono);font-size:.6rem;font-weight:500;color:var(--u-light);
@@ -131,8 +117,6 @@ input:focus,textarea:focus,select:focus{border-color:var(--u-light);background:o
 .q.missing{border-color:oklch(74% 0.19 8 / 0.65)}
 .q.missing .num{color:var(--u-alert)}
 .q.missing .num::after{content:" · falta responder";text-transform:none;letter-spacing:.04em}
-
-/* escala 0-10 */
 .scale10{display:grid;grid-template-columns:repeat(11,1fr);gap:6px}
 @media(max-width:560px){.scale10{grid-template-columns:repeat(6,1fr)}}
 .scale10 label{display:flex;align-items:center;justify-content:center;font-size:.88rem;font-weight:500;
@@ -144,30 +128,12 @@ input:focus,textarea:focus,select:focus{border-color:var(--u-light);background:o
   border-color:oklch(82% 0.15 75 / 0.6)}
 .scale-ends{display:flex;justify-content:space-between;font-family:var(--mono);font-size:.62rem;
   letter-spacing:.08em;color:var(--u-paper-mute);margin-top:8px}
-
-/* ── Consentimiento ── */
-.consent{border:1px solid var(--u-hair);border-radius:var(--u-r);
-  background:radial-gradient(120% 140% at 90% 0%, oklch(82% 0.15 75 / 0.06), transparent 60%),
-    oklch(23% 0.062 277 / .4);padding:24px 26px}
-.consent h3{font-family:var(--serif);font-weight:460;font-size:1.08rem;letter-spacing:-.01em;margin-bottom:12px}
-.consent p,.consent li{font-size:.92rem;color:var(--u-paper-dim);text-wrap:pretty}
-.consent ul{padding-left:18px;margin:10px 0}
-.consent li{margin-bottom:8px}
-.consent li::marker{color:var(--u-light)}
-.consent b{color:var(--u-paper);font-weight:560}
-.check{display:flex;gap:12px;align-items:flex-start;margin-top:18px;cursor:pointer}
-.check input{width:17px;height:17px;margin-top:3px;accent-color:oklch(72% 0.15 62);flex:none}
-.check span{font-size:.94rem;font-weight:540;color:var(--u-paper)}
-
-/* ── Aviso de riesgo ── */
 .crisis{display:none;border:1px solid oklch(74% 0.19 8 / 0.5);border-radius:var(--u-r);
   background:oklch(74% 0.19 8 / 0.08);padding:19px 21px;margin:14px 0}
 .crisis.on{display:block}
 .crisis h3{font-family:var(--serif);font-size:1rem;font-weight:500;color:var(--u-alert);margin-bottom:7px}
 .crisis p{font-size:.92rem;color:var(--u-paper-dim);text-wrap:pretty}
 .crisis b{color:var(--u-paper)}
-
-/* ── Navegación de pasos ── */
 .stepnav{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:30px;
   padding-top:22px;border-top:1px solid var(--u-hair)}
 .btn{display:inline-flex;align-items:center;gap:9px;font-family:var(--mono);font-size:.66rem;
@@ -184,8 +150,6 @@ input:focus,textarea:focus,select:focus{border-color:var(--u-light);background:o
 .err{display:none;font-size:.9rem;color:var(--u-alert);margin-top:14px}
 .err.on{display:block}
 .err .btn{margin-top:10px}
-
-/* ── Final ── */
 .done{border:1px solid var(--u-hair);border-radius:var(--u-r);text-align:center;
   background:radial-gradient(90% 130% at 50% 0%, oklch(82% 0.15 75 / 0.08), transparent 65%),
     oklch(23% 0.062 277 / .4);padding:52px 32px}
@@ -194,12 +158,10 @@ input:focus,textarea:focus,select:focus{border-color:var(--u-light);background:o
 .done h2{font-family:var(--serif);font-weight:360;font-size:1.8rem;letter-spacing:-.02em;margin-bottom:12px}
 .done h2 em{font-style:italic;color:var(--u-light)}
 .done p{font-size:.98rem;color:var(--u-paper-dim);max-width:50ch;margin:0 auto;text-wrap:pretty}
-
 footer{border-top:1px solid var(--u-hair);margin-top:52px;padding:30px 0 46px}
 footer .name{font-family:var(--serif);font-weight:500;color:var(--u-paper);font-size:.98rem}
 footer .role{font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--u-paper-mute);margin-left:10px}
 .aviso{font-size:.8rem;color:var(--u-paper-mute);margin-top:14px;max-width:74ch;text-wrap:pretty;line-height:1.6}
-
 @media(max-width:560px){
   .brand .desc{display:none}
   .hero{padding-top:56px}
@@ -221,7 +183,7 @@ footer .role{font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;text-
       <path d="M74 66 L100 80"/>
     </svg>
     <span class="wm">quinde<b>.</b></span>
-    <span class="desc">consulta</span>
+    <span class="desc">seguimiento</span>
   </a>
   <span class="saved" id="saved">Borrador guardado</span>
 </div></nav>
@@ -230,141 +192,42 @@ footer .role{font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;text-
 <div class="wrap">
 
 <header class="hero">
-  <div class="eyebrow">Evaluación pre-consulta</div>
-  <h1>Antes de tu <em>primera sesión</em></h1>
-  <p class="lede">Este cuestionario me ayuda a conocer tu situación antes de vernos, para que en
-    la sesión aprovechemos el tiempo en lo que de verdad importa: entender y trabajar tu caso.
-    Toma entre <strong>15 y 25 minutos</strong>. Tus respuestas se guardan en este dispositivo
-    mientras avanzas, así que puedes pausar y continuar después desde este mismo navegador.</p>
+  <div class="eyebrow">Seguimiento de sesión</div>
+  <h1>Antes de tu <em>próxima sesión</em></h1>
+  <p class="lede">Este cuestionario breve me permite ver tu evolución entre sesiones y ajustar
+    el trabajo a cómo estás <strong>ahora</strong>, no a cómo estabas al inicio. Toma
+    <strong>3 a 5 minutos</strong>. Respóndelo el día de tu sesión o el día anterior.</p>
   <div class="who">Diego Quinde Probst · psicólogo clínico · Santo Domingo, Ecuador</div>
 </header>
 
-<!-- ═══ PASO 0 · Consentimiento ═══ -->
+<!-- ═══ PASO 0 · Código y estado general ═══ -->
 <section class="step" data-step="0">
-  <div class="s-label">Paso 1 · Consentimiento</div>
-  <h2 class="section">Antes de empezar</h2>
-  <div class="consent">
-    <h3>Qué es esto y cómo se usan tus respuestas</h3>
-    <ul>
-      <li>Este cuestionario es <b>preparación para tu consulta</b> con el psicólogo clínico Diego
-        Quinde Probst. No es un diagnóstico automático ni reemplaza la evaluación clínica, que
-        haremos juntos en sesión.</li>
-      <li>Tus respuestas se envían de forma cifrada y se almacenan en una base de datos protegida
-        a la que <b>solo yo tengo acceso</b>, con fines exclusivamente clínicos y bajo secreto
-        profesional.</li>
-      <li>Responder es <b>voluntario</b>. Si alguna pregunta te incomoda, puedes dejarla en blanco
-        (salvo los cuestionarios estandarizados, que necesitan estar completos para ser útiles).</li>
-      <li>Puedes pedirme en cualquier momento acceso, corrección o eliminación de tus datos.</li>
-      <li>Este formulario <b>no es un servicio de emergencia</b>. Si estás en crisis o en riesgo,
-        llama al <b>911</b> o acude al servicio de urgencias más cercano.</li>
-    </ul>
-    <label class="check">
-      <input type="checkbox" id="consent">
-      <span>He leído y entiendo lo anterior, y acepto responder este cuestionario.</span>
-    </label>
-  </div>
-  <div class="err" id="err0">Para continuar necesitas marcar la casilla de consentimiento.</div>
-  <div class="stepnav">
-    <span class="stepcount">1 / 6</span>
-    <button class="btn primary" data-next>Comenzar</button>
-  </div>
-</section>
-
-<!-- ═══ PASO 1 · Datos ═══ -->
-<section class="step" data-step="1">
-  <div class="s-label">Paso 2 · Datos generales</div>
-  <h2 class="section">Sobre ti</h2>
+  <div class="s-label">Paso 1 · Tu código</div>
+  <h2 class="section">Empecemos</h2>
+  <p class="section-lead">Usa el código personal que te di en consulta (por ejemplo, P-007).
+    Aquí no va tu nombre: el código protege tu identidad.</p>
   <div class="grid2">
-    <div class="field"><label for="f-nombre">Nombre completo *</label>
-      <input type="text" id="f-nombre" autocomplete="name"></div>
-    <div class="field"><label for="f-edad">Edad *</label>
-      <input type="number" id="f-edad" min="12" max="110" inputmode="numeric"></div>
-    <div class="field"><label for="f-ocupacion">Ocupación</label>
-      <input type="text" id="f-ocupacion"></div>
-    <div class="field"><label for="f-convive">¿Con quién vives?</label>
-      <input type="text" id="f-convive" placeholder="p. ej. con mi pareja y dos hijos"></div>
-    <div class="field"><label for="f-contacto">Teléfono o correo de contacto *</label>
-      <input type="text" id="f-contacto" autocomplete="tel"></div>
-    <div class="field"><label for="f-derivacion">¿Cómo llegaste a mí?</label>
-      <input type="text" id="f-derivacion" placeholder="recomendación, redes, médico…"></div>
+    <div class="field"><label for="f-codigo">Tu código *</label>
+      <input type="text" id="f-codigo" placeholder="P-007" autocapitalize="characters" autocomplete="off"></div>
+    <div class="field"><label for="f-sesion">¿Qué número de sesión toca? *</label>
+      <div class="hint">Si no lo recuerdas exacto, tu mejor estimación.</div>
+      <input type="number" id="f-sesion" min="1" max="999" inputmode="numeric"></div>
   </div>
-  <div class="err" id="err1">Completa los campos marcados con *.</div>
-  <div class="stepnav">
-    <button class="btn ghost" data-prev>Atrás</button>
-    <span class="stepcount">2 / 6</span>
-    <button class="btn primary" data-next>Continuar</button>
-  </div>
-</section>
-
-<!-- ═══ PASO 2 · Historia ═══ -->
-<section class="step" data-step="2">
-  <div class="s-label">Paso 3 · Tu situación</div>
-  <h2 class="section">El problema, en tus palabras</h2>
-  <p class="section-lead">No hay respuestas correctas. Escribe con naturalidad, como si me lo
-    contaras en persona. Lo que escribas aquí orienta directamente nuestra primera conversación.</p>
-
-  <div class="field"><label for="h-motivo">¿Qué te trae a consulta? *</label>
-    <div class="hint">Describe el problema o malestar principal.</div>
-    <textarea id="h-motivo"></textarea></div>
-
-  <div class="field"><label for="h-inicio">¿Desde cuándo ocurre? ¿Pasó algo alrededor de esa época?</label>
-    <textarea id="h-inicio"></textarea></div>
-
-  <div class="field"><label for="h-intentos">¿Qué has intentado hasta ahora para resolverlo, y qué resultado tuvo?</label>
-    <div class="hint">Incluye todo: consejos que seguiste, cosas que evitas, ayuda que buscaste, esfuerzos propios…</div>
-    <textarea id="h-intentos"></textarea></div>
-
-  <div class="field"><label for="h-personas">¿Quiénes más están involucrados o afectados por el problema? ¿Cómo reaccionan ellos?</label>
-    <textarea id="h-personas"></textarea></div>
-
-  <div class="field"><label for="h-excepciones">¿En qué momentos o situaciones el problema mejora, empeora o desaparece?</label>
-    <textarea id="h-excepciones"></textarea></div>
-
   <div class="field">
-    <label>En una escala de 0 a 10, ¿qué tan grave sientes el problema hoy?</label>
-    <div class="scale10" id="h-gravedad"></div>
+    <label>En una escala de 0 a 10, ¿qué tan grave sientes el problema hoy? *</label>
+    <div class="scale10" id="f-gravedad"></div>
     <div class="scale-ends"><span>0 · no es problema</span><span>10 · insoportable</span></div>
   </div>
-
-  <div class="field"><label for="h-previa">¿Has recibido atención psicológica o psiquiátrica antes? ¿Cómo te fue?</label>
-    <textarea id="h-previa"></textarea></div>
-
-  <div class="field">
-    <label>¿Has usado ChatGPT u otra inteligencia artificial para hablar de este problema o buscar apoyo emocional?</label>
-    <div class="opts" id="h-ia-uso"></div>
-  </div>
-  <div id="ia-detalle" style="display:none">
-    <div class="field"><label for="h-ia-para">¿Para qué la usas, y qué te ha dado?</label>
-      <div class="hint">p. ej. desahogarme, pedir consejos, entender lo que me pasa, compañía…</div>
-      <textarea id="h-ia-para"></textarea></div>
-    <div class="field">
-      <label>De 0 a 10, ¿cuánto sientes que te ha ayudado?</label>
-      <div class="scale10" id="h-ia-ayuda"></div>
-      <div class="scale-ends"><span>0 · nada</span><span>10 · muchísimo</span></div>
-    </div>
-  </div>
-
-  <div class="field"><label for="h-salud">Salud general: condiciones médicas, medicación actual, sueño, consumo de alcohol u otras sustancias</label>
-    <textarea id="h-salud"></textarea></div>
-
-  <div class="field"><label for="h-objetivo">Cuando el proceso funcione, ¿qué será diferente en tu vida?</label>
-    <div class="hint">¿Qué sería para ti una señal concreta de mejoría?</div>
-    <textarea id="h-objetivo"></textarea></div>
-
-  <div class="field"><label for="h-extra">¿Algo más que deba saber antes de la primera sesión?</label>
-    <textarea id="h-extra"></textarea></div>
-
-  <div class="err" id="err2">Describe al menos el motivo de consulta para continuar.</div>
+  <div class="err" id="err0">Completa tu código, el número de sesión y la escala de gravedad.</div>
   <div class="stepnav">
-    <button class="btn ghost" data-prev>Atrás</button>
-    <span class="stepcount">3 / 6</span>
+    <span class="stepcount">1 / 4</span>
     <button class="btn primary" data-next>Continuar</button>
   </div>
 </section>
 
-<!-- ═══ PASO 3 · PHQ-9 ═══ -->
-<section class="step" data-step="3">
-  <div class="s-label">Paso 4 · Cuestionario PHQ-9</div>
+<!-- ═══ PASO 1 · PHQ-9 ═══ -->
+<section class="step" data-step="1">
+  <div class="s-label">Paso 2 · Cuestionario PHQ-9</div>
   <h2 class="section">Estado de ánimo</h2>
   <div class="instr">Durante las <b>últimas 2 semanas</b>, ¿con qué frecuencia te han molestado
     los siguientes problemas? Marca una opción en cada fila.</div>
@@ -372,104 +235,62 @@ footer .role{font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;text-
   <div class="crisis" id="crisis-phq9">
     <h3>Un momento — esto es importante</h3>
     <p>Marcaste que has tenido pensamientos de hacerte daño o de que estarías mejor muerto(a).
-      Gracias por la honestidad: es de las cosas más importantes que puedo saber antes de vernos,
-      y lo hablaremos con calma en sesión. Si esos pensamientos se vuelven intensos o sientes que
-      podrías actuar sobre ellos <b>no esperes a la cita</b>: llama al <b>911</b>, acude a
-      urgencias, o escríbeme directamente.</p>
+      Gracias por la honestidad: lo hablaremos con calma en sesión. Si esos pensamientos se
+      vuelven intensos o sientes que podrías actuar sobre ellos <b>no esperes a la cita</b>:
+      llama al <b>911</b>, acude a urgencias, o escríbeme directamente.</p>
   </div>
-  <div class="q" style="margin-top:18px">
-    <div class="num">Para terminar esta sección</div>
-    <label>Si marcaste algún problema, ¿qué tanta dificultad te han dado para hacer tu trabajo,
-      encargarte de las tareas del hogar o llevarte bien con otras personas?</label>
-    <div class="opts" id="phq9-impacto"></div>
-  </div>
-  <div class="err" id="err3">Responde todas las preguntas de esta sección.</div>
+  <div class="err" id="err1">Responde todas las preguntas de esta sección.</div>
   <div class="stepnav">
     <button class="btn ghost" data-prev>Atrás</button>
-    <span class="stepcount">4 / 6</span>
+    <span class="stepcount">2 / 4</span>
     <button class="btn primary" data-next>Continuar</button>
   </div>
 </section>
 
-<!-- ═══ PASO 4 · GAD-7 ═══ -->
-<section class="step" data-step="4">
-  <div class="s-label">Paso 5 · Cuestionario GAD-7</div>
+<!-- ═══ PASO 2 · GAD-7 ═══ -->
+<section class="step" data-step="2">
+  <div class="s-label">Paso 3 · Cuestionario GAD-7</div>
   <h2 class="section">Ansiedad y preocupación</h2>
   <div class="instr">Durante las <b>últimas 2 semanas</b>, ¿con qué frecuencia te han molestado
     los siguientes problemas?</div>
   <div id="gad7"></div>
-  <div class="err" id="err4">Responde todas las preguntas de esta sección.</div>
+  <div class="err" id="err2">Responde todas las preguntas de esta sección.</div>
   <div class="stepnav">
     <button class="btn ghost" data-prev>Atrás</button>
-    <span class="stepcount">5 / 6</span>
+    <span class="stepcount">3 / 4</span>
     <button class="btn primary" data-next>Continuar</button>
   </div>
 </section>
 
-<!-- ═══ PASO 5 · DASS-21 ═══ -->
-<section class="step" data-step="5">
-  <div class="s-label">Paso 6 · Cuestionario DASS-21</div>
-  <h2 class="section">La última semana</h2>
-  <div class="instr">Lee cada afirmación e indica <b>cuánto se aplicó a ti durante la última
-    semana</b>. No hay respuestas correctas ni incorrectas; no dediques demasiado tiempo a cada
-    frase.</div>
-  <div id="dass21"></div>
-  <div class="crisis" id="crisis-dass">
-    <h3>Un momento — esto es importante</h3>
-    <p>Algunas de tus respuestas sugieren que has sentido que la vida tiene poco sentido. Gracias
-      por decirlo: lo conversaremos en sesión. Si llegas a sentirte en riesgo <b>no esperes a la
-      cita</b>: llama al <b>911</b>, acude a urgencias, o escríbeme directamente.</p>
+<!-- ═══ PASO 3 · IA + enviar ═══ -->
+<section class="step" data-step="3">
+  <div class="s-label">Paso 4 · Última pregunta</div>
+  <h2 class="section">Desde la última sesión</h2>
+  <div class="field">
+    <label>¿Usaste ChatGPT u otra inteligencia artificial para hablar de tu malestar o buscar apoyo emocional desde la última sesión?</label>
+    <div class="opts" id="f-ia-uso"></div>
   </div>
-  <div class="err" id="err5">Responde todas las preguntas de esta sección.</div>
-  <div class="stepnav">
-    <button class="btn ghost" data-prev>Atrás</button>
-    <span class="stepcount">6 / 7</span>
-    <button class="btn primary" data-next>Continuar</button>
-  </div>
-</section>
-
-<!-- ═══ PASO 6 · Investigación (opt-in) ═══ -->
-<section class="step" data-step="6">
-  <div class="s-label">Paso 7 · Una pregunta aparte</div>
-  <h2 class="section">Uso de tus datos en investigación <em style="font-style:italic;color:var(--u-light)">(opcional)</em></h2>
-  <div class="consent" id="consent-inv-texto">
-    <h3>Esto es distinto de tu atención — y completamente voluntario</h3>
-    <p>Además de tu atención psicológica —que <b>no cambia en nada</b> por lo que respondas aquí—,
-      te pido permiso para algo distinto.</p>
-    <ul>
-      <li><b>Qué te pido.</b> Poder usar tus respuestas a los cuestionarios y tu evolución a lo
-        largo de las sesiones para <b>investigación clínica</b>: estudiar cómo cambian las personas
-        durante la terapia y publicar lo aprendido en revistas científicas.</li>
-      <li><b>Cómo se protege tu identidad.</b> Antes de cualquier análisis se eliminan tu nombre,
-        contacto y todo dato que te identifique; se reemplazan por un código. La lista que conecta
-        el código contigo queda guardada aparte, cifrada, y solo yo tengo acceso. Ningún dato que
-        te identifique se procesa con herramientas de inteligencia artificial en la nube: ese
-        análisis se hace en mi equipo local.</li>
-      <li><b>Tus derechos.</b> Decir que no, ahora o después, sin dar explicaciones y sin ninguna
-        consecuencia para tu atención. Puedes retirar este permiso cuando quieras escribiéndome a
-        diegoaquinde@gmail.com, y pedir acceso, corrección o eliminación de tus datos en cualquier
-        momento.</li>
-      <li><b>Qué NO es esto.</b> No es una condición para atenderte, no cambia el costo ni el
-        contenido de tus sesiones, y no implica que tu caso vaya a publicarse — solo lo hace
-        posible, con las protecciones descritas. Si algún día se describiera tu caso en una
-        publicación, tú leerías y aprobarías el texto antes.</li>
-    </ul>
-    <div class="opts" id="inv-opts" style="grid-template-columns:1fr 1fr;margin-top:18px">
-      <label><input type="radio" name="inv-autoriza" value="1"><b>SÍ autorizo</b>&nbsp;el uso de mis datos, en forma anonimizada, con fines de investigación</label>
-      <label><input type="radio" name="inv-autoriza" value="0"><b>NO autorizo</b>&nbsp;(mi atención continúa exactamente igual)</label>
+  <div id="ia-detalle" style="display:none">
+    <div class="field"><label for="f-ia-para">¿Para qué la usaste, y qué te dio?</label>
+      <div class="hint">p. ej. desahogarme, pedir consejos, entender lo que me pasa, compañía…</div>
+      <textarea id="f-ia-para"></textarea></div>
+    <div class="field">
+      <label>De 0 a 10, ¿cuánto sientes que te ayudó?</label>
+      <div class="scale10" id="f-ia-ayuda"></div>
+      <div class="scale-ends"><span>0 · nada</span><span>10 · muchísimo</span></div>
     </div>
   </div>
-  <div class="err" id="err6">Elige una de las dos opciones para terminar — cualquiera de las dos está bien.</div>
+  <div class="err" id="err3">Indica si usaste inteligencia artificial desde la última sesión.</div>
   <div class="err" id="err-envio"></div>
   <div class="stepnav">
     <button class="btn ghost" data-prev>Atrás</button>
-    <span class="stepcount">7 / 7</span>
-    <button class="btn primary" id="btn-enviar">Enviar mis respuestas</button>
+    <span class="stepcount">4 / 4</span>
+    <button class="btn primary" id="btn-enviar">Enviar</button>
   </div>
 </section>
 
 <!-- ═══ FINAL ═══ -->
-<section class="step" data-step="7">
+<section class="step" data-step="4">
   <div class="done">
     <svg class="colibri" viewBox="2 12 114 74" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
       <path d="M6 42 L42 48"/>
@@ -480,17 +301,16 @@ footer .role{font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;text-
       <path d="M74 66 L100 80"/>
     </svg>
     <h2>Recibido. <em>Gracias.</em></h2>
-    <p id="done-msg">Tus respuestas llegaron correctamente y las revisaré antes de nuestra sesión.
-      Nos vemos en la consulta — trae cualquier duda que te haya surgido al responder.</p>
+    <p>Tu seguimiento llegó correctamente y lo revisaré antes de tu sesión.
+      Nos vemos en la consulta.</p>
   </div>
 </section>
 
 <footer>
   <div><span class="name">Diego Quinde Probst</span><span class="role">psicólogo clínico</span></div>
-  <p class="aviso">Este cuestionario es material de preparación clínica y no constituye un
+  <p class="aviso">Este cuestionario es material de seguimiento clínico y no constituye un
     diagnóstico. PHQ-9 y GAD-7 son instrumentos de tamizaje de dominio público (Pfizer/Spitzer
-    et al.). DASS-21 © Lovibond &amp; Lovibond, de uso público. Si estás en una emergencia,
-    llama al 911.</p>
+    et al.). Si estás en una emergencia, llama al 911.</p>
 </footer>
 
 </div>
@@ -498,9 +318,9 @@ footer .role{font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;text-
 <script>
 'use strict';
 /* ───────────────────────── configuración ───────────────────────── */
-const ENDPOINT = 'https://z64bxs48.us-east.insforge.app/functions/evaluacion';
-const FORM_TOKEN = 'qc-eval-v1';
-const LS_KEY = 'quinde-evaluacion-v1';
+const ENDPOINT = 'https://z64bxs48.us-east.insforge.app/functions/seguimiento';
+const FORM_TOKEN = 'qc-seg-v1';
+const LS_KEY = 'quinde-seguimiento-v1';
 
 /* ───────────────────────── instrumentos ───────────────────────── */
 const FREC = ['Ningún día','Varios días','Más de la mitad de los días','Casi todos los días'];
@@ -516,8 +336,6 @@ const PHQ9 = [
   '¿Se ha movido o hablado tan lento que otras personas podrían haberlo notado? o lo contrario — muy inquieto(a) o agitado(a), que ha estado moviéndose mucho más de lo normal',
   'Pensamientos de que estaría mejor muerto(a) o de lastimarse de alguna manera'
 ];
-const PHQ9_IMPACTO = ['Nada difícil','Un poco difícil','Muy difícil','Extremadamente difícil'];
-
 const GAD7 = [
   'Se ha sentido nervioso(a), ansioso(a) o con los nervios de punta',
   'No ha sido capaz de parar o controlar su preocupación',
@@ -527,38 +345,7 @@ const GAD7 = [
   'Se ha molestado o irritado fácilmente',
   'Ha tenido miedo de que algo terrible fuera a pasar'
 ];
-
-const DASS_OPTS = [
-  '0 · No me aplicó',
-  '1 · Un poco, o parte del tiempo',
-  '2 · Bastante, o buena parte del tiempo',
-  '3 · Mucho, o la mayor parte del tiempo'
-];
-const DASS21 = [
-  'Me costó mucho relajarme',
-  'Me di cuenta de que tenía la boca seca',
-  'No podía sentir ningún sentimiento positivo',
-  'Se me hizo difícil respirar (p. ej. respiración muy rápida o quedarme sin aire sin haber hecho esfuerzo físico)',
-  'Se me hizo difícil tomar la iniciativa para hacer cosas',
-  'Reaccioné de forma exagerada en ciertas situaciones',
-  'Sentí que mis manos temblaban',
-  'Sentí que tenía muchos nervios',
-  'Estaba preocupado(a) por situaciones en las que podía entrar en pánico o hacer el ridículo',
-  'Sentí que no tenía nada por qué vivir',
-  'Noté que me agitaba',
-  'Se me hizo difícil relajarme',
-  'Me sentí triste y deprimido(a)',
-  'No toleré nada que no me permitiera continuar con lo que estaba haciendo',
-  'Sentí que estaba a punto de entrar en pánico',
-  'No pude entusiasmarme por nada',
-  'Sentí que valía muy poco como persona',
-  'Sentí que estaba muy irritable',
-  'Sentí los latidos de mi corazón sin haber hecho esfuerzo físico (p. ej. el corazón acelerado o que se saltaba un latido)',
-  'Tuve miedo sin razón',
-  'Sentí que la vida no tenía ningún sentido'
-];
-// índices 1-based por subescala (DASS-21)
-const DASS_DEP = [3,5,10,13,16,17,21], DASS_ANS = [2,4,7,9,15,19,20], DASS_EST = [1,6,8,11,12,14,18];
+const IA_USO = ['No','Alguna vez','Con frecuencia','Casi a diario'];
 
 /* ───────────────────────── render de ítems ───────────────────────── */
 function renderScale(containerId, prefix, items, opts){
@@ -574,47 +361,27 @@ function renderScale(containerId, prefix, items, opts){
 }
 renderScale('phq9','phq9',PHQ9,FREC);
 renderScale('gad7','gad7',GAD7,FREC);
-renderScale('dass21','dass',DASS21,DASS_OPTS);
-document.getElementById('phq9-impacto').innerHTML =
-  PHQ9_IMPACTO.map((o,v)=>`<label><input type="radio" name="phq9-impacto" value="${v}">${o}</label>`).join('');
-document.getElementById('h-gravedad').innerHTML =
-  Array.from({length:11},(_,v)=>`<label><input type="radio" name="h-gravedad" value="${v}">${v}</label>`).join('');
-const IA_USO = ['Nunca','Alguna vez','Con frecuencia','Casi a diario'];
-document.getElementById('h-ia-uso').innerHTML =
-  IA_USO.map((o,v)=>`<label><input type="radio" name="h-ia-uso" value="${v}">${o}</label>`).join('');
-document.getElementById('h-ia-ayuda').innerHTML =
-  Array.from({length:11},(_,v)=>`<label><input type="radio" name="h-ia-ayuda" value="${v}">${v}</label>`).join('');
+document.getElementById('f-gravedad').innerHTML =
+  Array.from({length:11},(_,v)=>`<label><input type="radio" name="f-gravedad" value="${v}">${v}</label>`).join('');
+document.getElementById('f-ia-uso').innerHTML =
+  IA_USO.map((o,v)=>`<label><input type="radio" name="f-ia-uso" value="${v}">${o}</label>`).join('');
+document.getElementById('f-ia-ayuda').innerHTML =
+  Array.from({length:11},(_,v)=>`<label><input type="radio" name="f-ia-ayuda" value="${v}">${v}</label>`).join('');
 function toggleIaDetalle(){
-  const v = val('h-ia-uso');
+  const v = val('f-ia-uso');
   document.getElementById('ia-detalle').style.display = (v!==null && v>0) ? '' : 'none';
 }
 
-/* hash del texto exacto de consentimiento de investigación (trazabilidad) */
-const CONSENT_INV_VERSION = 'v2';
-let CONSENT_INV_SHA256 = null;
-(async ()=>{ try{
-  const txt = document.getElementById('consent-inv-texto').textContent.replace(/\s+/g,' ').trim();
-  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(txt));
-  CONSENT_INV_SHA256 = Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
-}catch(_){} })();
-
-/* estado visual de radios estilo botón */
 document.addEventListener('change', e=>{
   if(e.target.type!=='radio') return;
   document.querySelectorAll(`input[name="${e.target.name}"]`).forEach(r=>
     r.closest('label').classList.toggle('on', r.checked));
   const q = e.target.closest('.q'); if(q) q.classList.remove('missing');
-  // alertas de riesgo en vivo
   if(e.target.name==='phq9-8')
     document.getElementById('crisis-phq9').classList.toggle('on', +e.target.value>0);
-  if(e.target.name==='dass-9'||e.target.name==='dass-20') checkDassRisk();
-  if(e.target.name==='h-ia-uso') toggleIaDetalle();
+  if(e.target.name==='f-ia-uso') toggleIaDetalle();
   save();
 });
-function checkDassRisk(){
-  const v10 = val('dass-9'), v21 = val('dass-20');
-  document.getElementById('crisis-dass').classList.toggle('on',(v10!==null&&v10>=2)||(v21!==null&&v21>=2));
-}
 
 /* ───────────────────────── helpers ───────────────────────── */
 const $ = id => document.getElementById(id);
@@ -625,21 +392,18 @@ function val(name){
 function scaleVals(prefix,n){
   return Array.from({length:n},(_,i)=>val(`${prefix}-${i}`));
 }
-function severidad(total, bandas){ // bandas: [[max,label],...]
+function severidad(total, bandas){
   for(const [max,label] of bandas) if(total<=max) return label;
   return bandas[bandas.length-1][1];
 }
 
 /* ───────────────────────── persistencia local ───────────────────────── */
-const TEXT_IDS = ['f-nombre','f-edad','f-ocupacion','f-convive','f-contacto','f-derivacion',
-  'h-motivo','h-inicio','h-intentos','h-personas','h-excepciones','h-previa','h-ia-para',
-  'h-salud','h-objetivo','h-extra'];
+const TEXT_IDS = ['f-codigo','f-sesion','f-ia-para'];
 let saveT;
 function save(){
   const radios = {};
   document.querySelectorAll('input[type=radio]:checked').forEach(r=>radios[r.name]=r.value);
-  const data = {step, consent:$('consent').checked, radios,
-    text:Object.fromEntries(TEXT_IDS.map(id=>[id,$(id).value]))};
+  const data = {step, radios, text:Object.fromEntries(TEXT_IDS.map(id=>[id,$(id).value]))};
   localStorage.setItem(LS_KEY, JSON.stringify(data));
   const s = $('saved'); s.classList.add('on');
   clearTimeout(saveT); saveT = setTimeout(()=>s.classList.remove('on'), 1600);
@@ -647,21 +411,18 @@ function save(){
 function restore(){
   let d; try{ d = JSON.parse(localStorage.getItem(LS_KEY)||'null'); }catch(_){ return; }
   if(!d) return;
-  $('consent').checked = !!d.consent;
   TEXT_IDS.forEach(id=>{ if(d.text && d.text[id]!=null) $(id).value = d.text[id]; });
   Object.entries(d.radios||{}).forEach(([name,v])=>{
     const r = document.querySelector(`input[name="${name}"][value="${v}"]`);
     if(r){ r.checked = true; r.closest('label').classList.add('on'); }
   });
   const v9 = val('phq9-8'); if(v9!==null&&v9>0) $('crisis-phq9').classList.add('on');
-  checkDassRisk();
   toggleIaDetalle();
-  if(typeof d.step==='number' && d.step>0 && d.step<7) step = d.step;
+  if(typeof d.step==='number' && d.step>0 && d.step<4) step = d.step;
 }
 document.addEventListener('input', e=>{
-  if(e.target.matches('input[type=text],input[type=number],input[type=email],textarea')) save();
+  if(e.target.matches('input[type=text],input[type=number],textarea')) save();
 });
-$('consent').addEventListener('change', save);
 
 /* ───────────────────────── navegación ───────────────────────── */
 let step = 0;
@@ -669,7 +430,7 @@ const START = Date.now();
 function show(){
   document.querySelectorAll('section.step').forEach(s=>
     s.classList.toggle('on', +s.dataset.step===step));
-  $('pbar').style.width = (step/7*100)+'%';
+  $('pbar').style.width = (step/4*100)+'%';
   window.scrollTo({top:0,behavior:'smooth'});
 }
 function markMissing(prefix,n){
@@ -682,14 +443,12 @@ function markMissing(prefix,n){
   }
   return ok;
 }
+const CODIGO_RE = /^[A-Za-z0-9][A-Za-z0-9-]{1,19}$/;
 const VALIDATORS = {
-  0: ()=> $('consent').checked,
-  1: ()=> $('f-nombre').value.trim() && $('f-edad').value.trim() && $('f-contacto').value.trim(),
-  2: ()=> $('h-motivo').value.trim(),
-  3: ()=> markMissing('phq9',9) & (val('phq9-impacto')!==null),
-  4: ()=> markMissing('gad7',7),
-  5: ()=> markMissing('dass',21),
-  6: ()=> val('inv-autoriza')!==null
+  0: ()=> CODIGO_RE.test($('f-codigo').value.trim()) && $('f-sesion').value.trim() && val('f-gravedad')!==null,
+  1: ()=> markMissing('phq9',9),
+  2: ()=> markMissing('gad7',7),
+  3: ()=> val('f-ia-uso')!==null
 };
 document.querySelectorAll('[data-next]').forEach(b=>b.addEventListener('click',()=>{
   const ok = VALIDATORS[step] ? VALIDATORS[step]() : true;
@@ -703,51 +462,31 @@ document.querySelectorAll('[data-prev]').forEach(b=>b.addEventListener('click',(
 
 /* ───────────────────────── puntuación y envío ───────────────────────── */
 function buildPayload(){
-  const phq = scaleVals('phq9',9), gad = scaleVals('gad7',7), dass = scaleVals('dass',21);
+  const phq = scaleVals('phq9',9), gad = scaleVals('gad7',7);
   const phqTotal = phq.reduce((a,b)=>a+b,0);
   const gadTotal = gad.reduce((a,b)=>a+b,0);
-  const sub = idx => idx.reduce((a,i)=>a+dass[i-1],0)*2; // ×2 → equivalente DASS-42
-  const dep = sub(DASS_DEP), ans = sub(DASS_ANS), est = sub(DASS_EST);
+  const iaUso = val('f-ia-uso');
   return {
     token: FORM_TOKEN,
     enviado_en: new Date().toISOString(),
     duracion_min: Math.round((Date.now()-START)/60000),
-    datos: {
-      nombre: $('f-nombre').value.trim(), edad: +$('f-edad').value,
-      ocupacion: $('f-ocupacion').value.trim(), convivencia: $('f-convive').value.trim(),
-      contacto: $('f-contacto').value.trim(), derivacion: $('f-derivacion').value.trim()
-    },
-    historia: {
-      motivo: $('h-motivo').value.trim(), inicio: $('h-inicio').value.trim(),
-      intentos_solucion: $('h-intentos').value.trim(), personas_involucradas: $('h-personas').value.trim(),
-      excepciones: $('h-excepciones').value.trim(), gravedad_0a10: val('h-gravedad'),
-      atencion_previa: $('h-previa').value.trim(), salud: $('h-salud').value.trim(),
-      objetivo: $('h-objetivo').value.trim(), extra: $('h-extra').value.trim(),
-      ia_uso: val('h-ia-uso')!==null ? IA_USO[val('h-ia-uso')] : null,
-      ia_para_que: $('h-ia-para').value.trim(),
-      ia_ayuda_0a10: val('h-ia-uso')>0 ? val('h-ia-ayuda') : null
-    },
-    investigacion: {
-      version: CONSENT_INV_VERSION,
-      autoriza: val('inv-autoriza')===1,
-      respondido_en: new Date().toISOString(),
-      texto_sha256: CONSENT_INV_SHA256
-    },
+    codigo: $('f-codigo').value.trim().toUpperCase(),
+    sesion: +$('f-sesion').value || null,
+    gravedad: val('f-gravedad'),
     phq9: {
-      items: phq, total: phqTotal, item9: phq[8], impacto_funcional: PHQ9_IMPACTO[val('phq9-impacto')],
+      items: phq, total: phqTotal, item9: phq[8],
       severidad: severidad(phqTotal,[[4,'mínima'],[9,'leve'],[14,'moderada'],[19,'moderadamente severa'],[27,'severa']])
     },
     gad7: {
       items: gad, total: gadTotal,
       severidad: severidad(gadTotal,[[4,'mínima'],[9,'leve'],[14,'moderada'],[21,'severa']])
     },
-    dass21: {
-      items: dass,
-      depresion: { puntaje: dep, severidad: severidad(dep,[[9,'normal'],[13,'leve'],[20,'moderada'],[27,'severa'],[42,'extremadamente severa']]) },
-      ansiedad:  { puntaje: ans, severidad: severidad(ans,[[7,'normal'],[9,'leve'],[14,'moderada'],[19,'severa'],[42,'extremadamente severa']]) },
-      estres:    { puntaje: est, severidad: severidad(est,[[14,'normal'],[18,'leve'],[25,'moderada'],[33,'severa'],[42,'extremadamente severa']]) }
+    ia: {
+      uso: iaUso!==null ? IA_USO[iaUso] : null,
+      para_que: $('f-ia-para').value.trim(),
+      ayuda_0a10: iaUso>0 ? val('f-ia-ayuda') : null
     },
-    alerta_riesgo: phq[8]>0 || dass[9]>=2 || dass[20]>=2
+    alerta_riesgo: phq[8]>0
   };
 }
 
@@ -755,13 +494,13 @@ function descargarRespaldo(payload){
   const blob = new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = 'evaluacion-'+(payload.datos.nombre||'respuestas').toLowerCase().replace(/\s+/g,'-')+'.json';
+  a.download = 'seguimiento-'+(payload.codigo||'respuestas').toLowerCase()+'-s'+(payload.sesion||'x')+'.json';
   a.click(); URL.revokeObjectURL(a.href);
 }
 
 $('btn-enviar').addEventListener('click', async ()=>{
-  const ok = VALIDATORS[6]();
-  $('err6').classList.toggle('on', !ok);
+  const ok = VALIDATORS[3]();
+  $('err3').classList.toggle('on', !ok);
   if(!ok) return;
   const btn = $('btn-enviar'), err = $('err-envio');
   btn.disabled = true; btn.textContent = 'Enviando…'; err.classList.remove('on');
@@ -773,7 +512,7 @@ $('btn-enviar').addEventListener('click', async ()=>{
     });
     if(!res.ok) throw new Error('HTTP '+res.status);
     localStorage.removeItem(LS_KEY);
-    step = 7; show();
+    step = 4; show();
   }catch(e){
     btn.disabled = false; btn.textContent = 'Reintentar envío';
     err.innerHTML = 'No se pudo enviar (problema de conexión). Tus respuestas siguen guardadas '+
