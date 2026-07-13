@@ -248,7 +248,7 @@ body {
   .panel, .preview__hint { display: none !important; }
   .preview { padding: 0; overflow: visible; }
   .preview__scaler { transform: none !important; }
-  .q-page { box-shadow: none; margin: 0; }
+  .q-page { box-shadow: none; margin: 0; min-height: 293mm; }
 }
 .preview__hint { font-size: 11px; color: var(--q-ink-soft); margin: 0 0 14px; }
 </style>
@@ -272,6 +272,28 @@ body {
 .cert-meta--3{grid-template-columns:1fr 1fr 1fr;gap:3mm 6mm;padding:4mm 5mm;margin-bottom:4.5mm}
 .cert-fletras{display:block;font-size:8.5px;font-style:italic;color:var(--q-ink-soft);line-height:1.4;margin-top:.6mm}
 .cert-title__place .cert-fletras{display:inline;margin-top:0}
+/* Compactación: el formato Santo Domingo lleva más campos; densidad ajustada para caber en un A4 */
+.cert-inner{padding:8mm 15mm 5mm}
+.cert-head{padding-bottom:2.5mm;margin-bottom:3mm}
+.cert-head .q-brand__name{font-size:22px}
+.cert-head__contact{line-height:1.6}
+.cert-title{margin-bottom:4mm}
+.cert-title__eyebrow{margin-bottom:2.5mm}
+.cert-title__name{font-size:27px}
+.cert-title__place{margin-top:2mm}
+.cert-meta--3{gap:1.6mm 6mm;padding:2.5mm 4mm;margin-bottom:3mm}
+.cert-meta__label{font-size:7px;letter-spacing:.18em;margin-bottom:.4mm}
+.cert-meta__value{font-size:9.5px}
+.cert-sec{margin-bottom:2mm}
+.cert-body{font-size:10px;line-height:1.55;margin-bottom:3.5mm}
+.cert-obs{margin-bottom:4mm}
+.cert-obs__text{font-size:9.5px;line-height:1.5}
+.cert-repose{gap:6mm;padding:2.5mm 5mm;margin-bottom:3.5mm}
+.cert-repose__num{font-size:30px}
+.cert-sign{padding-top:2.5mm}
+.cert-sign__line{height:8mm}
+.cert-sign__estamp{padding:3mm 4mm;font-size:7.5px;line-height:1.55}
+.cert-foot{margin-top:3mm;padding-top:2mm}
 </style>
 <div id="gate">
   <form id="gate-form" class="gate-card" autocomplete="off">
