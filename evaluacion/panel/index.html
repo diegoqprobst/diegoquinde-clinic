@@ -165,6 +165,24 @@ summary:hover{color:var(--u-paper)}
 .loading{padding:60px;text-align:center;color:var(--u-paper-mute);font-family:var(--mono);
   font-size:.66rem;letter-spacing:.16em;text-transform:uppercase}
 
+/* ── Casos ── */
+#v-casos{display:none;padding:44px 0 80px}
+#v-casos.on{display:block}
+.caso{border:1px solid var(--u-hair);border-radius:var(--u-r);background:oklch(23% 0.062 277 / .3);
+  padding:22px 24px;margin-bottom:18px}
+.caso .c-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+.caso .c-code{font-family:var(--serif);font-size:1.3rem;font-weight:460;letter-spacing:-.01em}
+.caso .c-code em{font-style:normal;color:var(--u-light)}
+.ctable{width:100%;border-collapse:collapse}
+.ctable th{font-family:var(--mono);font-size:.56rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--u-paper-mute);text-align:left;padding:7px 9px;border-bottom:1px solid var(--u-hair-2)}
+.ctable td{padding:8px 9px;border-bottom:1px solid var(--u-hair);font-size:.85rem;color:var(--u-paper-dim)}
+.ctable td b{color:var(--u-paper);font-weight:560}
+.ctable .mut{color:var(--u-paper-mute)}
+.ctable .risk{color:var(--u-alert)}
+.ctable .lev{color:var(--u-light)}
+@media(max-width:680px){.ctable{display:block;overflow-x:auto}}
+
 footer{border-top:1px solid var(--u-hair);padding:26px 0 40px}
 footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;
   font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--u-paper-mute)}
@@ -193,6 +211,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;
     <span class="desc">panel clínico</span>
   </a>
   <div class="navacts" id="navacts" style="display:none">
+    <button class="btn ghost" id="btn-casos">Casos</button>
     <button class="btn ghost" id="btn-csv">CSV</button>
     <button class="btn ghost" id="btn-refresh">Actualizar</button>
     <button class="btn ghost" id="btn-logout">Salir</button>
@@ -242,6 +261,22 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;
   <div id="detail"></div>
 </div></div>
 
+<!-- ═══ CASOS (seudonimizados) ═══ -->
+<div id="v-casos"><div class="wrap">
+  <button class="back" id="btn-back-casos">← Volver a evaluaciones</button>
+  <div class="head">
+    <div>
+      <div class="kicker">Seguimiento por código</div>
+      <h1 class="title">Casos, <em>en trayectoria</em></h1>
+    </div>
+  </div>
+  <p style="color:var(--u-paper-mute);font-size:.88rem;margin-bottom:24px">
+    Espejo seudonimizado: aquí solo hay códigos P-NNN — la clave código↔persona vive
+    únicamente en el equipo local. Sesiones documentadas suben desde el CRM local
+    («Publicar espejo»); los seguimientos los envía cada paciente antes de su sesión.</p>
+  <div id="casos"><div class="loading">Cargando…</div></div>
+</div></div>
+
 <footer><div class="wrap">
   <span>Diego Quinde Probst · Psicólogo clínico</span>
   <span>Datos bajo secreto profesional</span>
@@ -288,7 +323,7 @@ let ROWS = [];
 
 /* ── vistas ── */
 function view(name){
-  ['v-login','v-list','v-detail'].forEach(v=>$(v).classList.toggle('on', v==='v-'+name));
+  ['v-login','v-list','v-detail','v-casos'].forEach(v=>$(v).classList.toggle('on', v==='v-'+name));
   $('navacts').style.display = name==='login' ? 'none' : 'flex';
 }
 const token = () => sessionStorage.getItem(TK);
@@ -321,8 +356,10 @@ $('loginform').addEventListener('submit', async e=>{
   }finally{ btn.disabled = false; btn.textContent = 'Entrar'; }
 });
 $('btn-logout').addEventListener('click', ()=>{ sessionStorage.removeItem(TK); view('login'); });
-$('btn-refresh').addEventListener('click', load);
+$('btn-refresh').addEventListener('click', ()=>{ if($('v-casos').classList.contains('on')) loadCasos(); else load(); });
 $('btn-back').addEventListener('click', ()=>view('list'));
+$('btn-casos').addEventListener('click', ()=>{ view('casos'); loadCasos(); });
+$('btn-back-casos').addEventListener('click', ()=>view('list'));
 
 /* ── lista ── */
 const fmtDate = iso => new Date(iso).toLocaleString('es-EC',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});
@@ -353,6 +390,59 @@ async function load(){
       el.addEventListener('click', ()=>showDetail(ROWS[+el.dataset.i])));
   }catch(ex){
     $('rows').innerHTML = '<div class="empty">Error al cargar: '+esc(ex.message)+'</div>';
+  }
+}
+
+/* ── casos (espejo seudonimizado) ── */
+function riesgoCell(r){
+  const n = String(r||'').toLowerCase();
+  if(!n || n==='ninguno' || n==='no') return '<span class="mut">—</span>';
+  if(n==='leve') return '<span class="lev">Leve</span>';
+  return '<span class="risk">'+esc(r)+'</span>';
+}
+async function loadCasos(){
+  $('casos').innerHTML = '<div class="loading">Cargando…</div>';
+  try{
+    const { seguimientos, sesiones_doc } = await api({action:'casos'});
+    const codigos = [...new Set([...sesiones_doc.map(d=>d.codigo), ...seguimientos.map(s=>s.codigo)])].sort();
+    if(!codigos.length){
+      $('casos').innerHTML = '<div class="empty">Todavía no hay casos publicados. Usa «Publicar espejo» en el CRM local, o espera el primer seguimiento de un paciente.</div>';
+      return;
+    }
+    $('casos').innerHTML = codigos.map(cod=>{
+      const docs = sesiones_doc.filter(d=>d.codigo===cod);
+      const segs = seguimientos.filter(s=>s.codigo===cod);
+      const nums = [...new Set([...docs.map(d=>d.sesion), ...segs.map(s=>s.sesion)])]
+        .sort((a,b)=>(a??9999)-(b??9999));
+      const alerta = segs.some(s=>s.alerta_riesgo);
+      const filas = nums.map(n=>{
+        const d = docs.find(x=>x.sesion===n) || {};
+        const g = segs.find(x=>x.sesion===n) || {};
+        return `<tr>
+          <td><b>s${n??'?'}</b></td>
+          <td class="mut">${esc(d.fecha || (g.enviado_en||'').slice(0,10) || '—')}</td>
+          <td>${riesgoCell(d.riesgo)}</td>
+          <td>${esc(d.animo||'—')}<span class="mut">${d.adherencia?' · '+esc(d.adherencia):''}</span></td>
+          <td>${g.phq9?.total??'<span class="mut">—</span>'}</td>
+          <td>${g.gad7?.total??'<span class="mut">—</span>'}</td>
+          <td>${g.gravedad??'<span class="mut">—</span>'}</td>
+          <td class="mut">${esc(g.ia?.uso||'—')}</td>
+        </tr>`;
+      }).join('');
+      return `<div class="caso">
+        <div class="c-head">
+          <span class="c-code"><em>${esc(cod)}</em></span>
+          <span class="chips">
+            ${alerta?'<span class="chip alert">⚠ riesgo en seguimiento</span>':''}
+            <span class="chip">${docs.length} documentada${docs.length===1?'':'s'}</span>
+            <span class="chip">${segs.length} seguimiento${segs.length===1?'':'s'}</span>
+          </span>
+        </div>
+        <table class="ctable"><tr><th>Sesión</th><th>Fecha</th><th>Riesgo</th><th>Ánimo · adherencia</th><th>PHQ-9</th><th>GAD-7</th><th>Grav.</th><th>IA</th></tr>${filas}</table>
+      </div>`;
+    }).join('');
+  }catch(ex){
+    $('casos').innerHTML = '<div class="empty">Error al cargar: '+esc(ex.message)+'</div>';
   }
 }
 
