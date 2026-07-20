@@ -236,7 +236,7 @@ footer .fs{font-family:var(--script);font-size:26px;color:var(--ink-soft);margin
         <li>Tus datos en archivos abiertos, tuyos para siempre</li>
         <li>Early-bird: quienes reserven estrenan con precio preferente</li>
       </ul>
-      <div class="req">Requiere Mac con Apple Silicon (M1 o superior) · macOS 13+</div>
+      <div class="req">Requisitos: Mac con chip Apple (M1 o superior) · <b>16 GB de RAM mínimo, 24 GB recomendado</b> · 15 GB de disco libres (modelos de IA) · macOS 13+</div>
     </div>
 
     <div class="form-card">
@@ -255,6 +255,14 @@ footer .fs{font-family:var(--script);font-size:26px;color:var(--ink-soft);margin
           <option>Estudiante</option>
           <option>Otra</option>
         </select>
+        <label>Tu Mac (nos ayuda a priorizar)</label>
+        <select name="mac">
+          <option>Mac con chip M · 16 GB de RAM</option>
+          <option>Mac con chip M · 24 GB o más</option>
+          <option>Mac con chip M · 8 GB de RAM</option>
+          <option>No estoy seguro/a</option>
+          <option>Aún no tengo Mac compatible</option>
+        </select>
         <button class="btn grande" type="submit" id="btn-reservar">Reservar mi licencia</button>
         <div class="form-nota" id="form-nota">Reservar es gratis y sin compromiso. Te avisamos al lanzar — y congelas el precio early-bird.</div>
       </form>
@@ -272,7 +280,7 @@ footer .fs{font-family:var(--script);font-size:26px;color:var(--ink-soft);margin
           body: JSON.stringify({
             token: 'qc-res-v1',
             nombre: f.nombre.value, email: f.email.value,
-            pais: f.pais.value, profesion: f.profesion.value,
+            pais: f.pais.value, profesion: f.profesion.value, mac: f.mac.value,
           }),
         });
         const d = await r.json();
@@ -304,6 +312,8 @@ footer .fs{font-family:var(--script);font-size:26px;color:var(--ink-soft);margin
         <p>Los datos nunca dejan tu equipo, así que tú sigues siendo el único custodio — no hay terceros procesando información clínica, ni contratos de encargo de tratamiento con nadie. La IA genera borradores que tú revisas y firmas: el criterio clínico siempre es tuyo.</p></details>
       <details><summary>¿Por qué pago único y no suscripción?</summary>
         <p>Porque no hay servidores que mantener por ti: todo corre en tu Mac. Compras la herramienta, es tuya. Las capacidades nuevas llegarán como plugins opcionales — añades solo lo que te sirva.</p></details>
+      <details><summary>¿Funciona en un MacBook Air? ¿Cuánto tarda en procesar?</summary>
+        <p>Funciona en cualquier Mac con chip Apple y <b>16 GB de RAM o más</b> — incluidos los Air. Como referencia: procesar una sesión de una hora (transcripción + separación de voces + nota + informe) toma <b>~30-40 minutos</b> en un equipo con 24 GB, y algo más en uno de 16 GB. Todo ocurre en segundo plano mientras haces otra cosa. Los Mac de <b>8 GB no están soportados</b> en esta versión: los modelos de IA de calidad clínica no caben en esa memoria — estamos evaluando un "modo ligero" futuro; dínoslo al reservar.</p></details>
       <details><summary>¿Funciona en Windows?</summary>
         <p>Hoy no: Quinde está optimizada para la IA de los chips Apple Silicon (M1 en adelante). Si hay suficiente interés, Windows es el siguiente paso — dínoslo al reservar.</p></details>
     </div>
